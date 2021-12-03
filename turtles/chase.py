@@ -16,6 +16,10 @@ __all__ = ['turtle_chase']
 # - Roomba: turtle moves in clean orderly lines up and down
 # - turtle writes out a message
 
+# TODO:
+# - finish character set, with all 26 capital letters, and !, ?
+# - Make turtle start and stop on timer while drawing straight lines, so that he matches his ellipse speed
+
 
 
 class TurtleChase:
@@ -28,14 +32,14 @@ class TurtleChase:
         mainloop()
 
     def run(self):
-        alphabet.write(self.turtle, 'GET OUT')
+        alphabet.write(self.turtle, 'GET OUT!')
         self.turtle = None
 
     def on_click(self, _x, _y):
         if self.turtle:
             print('I am very small, so you can imagine the kind of stress that I am under')
             return
-        x, y = (-100, -100)
+        x, y = (0, 0)
         self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False, speed='slowest')
         self.run()
 

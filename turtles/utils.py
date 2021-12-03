@@ -60,11 +60,12 @@ def position(turtle: Turtle, x, y, heading: Optional[float], teleport) -> None:
         turtle.setheading(heading)
 
 
-def retreat(turtle):
+def retreat(turtle: Turtle):
     walk(turtle, (0, 0))
     turtle.hideturtle()
 
-def walk(turtle, position: Tuple[int, int]):
+
+def walk(turtle: Turtle, position: Tuple[float, float]):
     """
     walk without drawing
     """

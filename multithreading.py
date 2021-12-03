@@ -27,7 +27,7 @@ def process_queue():
     if threading.active_count() > 1:
         turtle.ontimer(process_queue, 100)
 
-command_queue = Queue(1)  # size = number of hardware threads you have - 1
+command_queue: Queue = Queue(1)  # size = number of hardware threads you have - 1
 
 turtle1 = turtle.Turtle('turtle')
 turtle1.speed('fastest')
