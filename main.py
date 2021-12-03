@@ -1,5 +1,6 @@
 from typing import List
 from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer
+from threading import Timer
 import random
 
 # ideas
@@ -17,43 +18,47 @@ import random
 class TurtleChase:
     def __init__(self):
         self.fleet: List[Turtle] = []
+        self.new_turtle = None
         self.screen = Screen()
-        self.throttle = False
 
     def run(self):
         self.screen.onclick(self.on_click)
+        # self.screen.ondrag(self.new_turtle.goto)
+        # self.screen.onrelease(self.on_release)
         self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
 
     def on_click(self, x, y):
-        turtle = Turtle()
-        turtle.speed('slowest')
-        place(turtle, x, y)
+        self.new_turtle = Turtle()
+        self.new_turtle.setundobuffer(None)
+        print(self.new_turtle.undobuffer)
+        place(self.new_turtle, x, y)
+        self.new_turtle.speed('slowest')
+        self.new_turtle.penup()
+        # allow himb to be dragged
+        self.new_turtle.ondrag(self.new_turtle.goto)
+
         # nudge(turtle)
-        self.fleet.append(turtle)
+        # self.fleet.append(turtle)
+
+    def on_release(self, x, y):
+        self.fleet.append(self.new_turtle)
+        self.new_turtle = None
 
     def on_mouse_move(self, x, y):
+        # print(x, y)
+        return
         for turtle in self.fleet:
             angle = turtle.towards(x, y)
             print(f'{angle=}')
             turtle.left(angle)
-
-    def reset_throttle(self):
-        self.throttle = False
 
     # https://stackoverflow.com/a/44214001
     def set_on_mouse_move_handler(self, handler):
         screen = self.screen
 
         def event_handler(event):
-            if self.throttle:
-                print('throttled')
-                return
-            print(event)
             handler(screen.cv.canvasx(event.x), -screen.cv.canvasy(event.y))
-            self.throttle = True
-
-            ontimer(self.reset_throttle, 400)
 
         if handler is None:
             screen.cv.unbind('<Motion>')
@@ -64,7 +69,7 @@ class TurtleChase:
 def nudge(turtle):
     def move():
         turtle.forward(10)
-        ontimer(move, 400)
+        ontimer(move, 400, add=True)
 
     move()
 
