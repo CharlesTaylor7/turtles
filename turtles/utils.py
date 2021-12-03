@@ -85,15 +85,23 @@ def nudge(turtle: Turtle) -> None:
     move()
 
 
-def ellipse(turtle, a, b, angle=360):
-    print(f'drawing ellipse {a=}, {b=}, {angle=}')
+def ellipse(turtle, a, b, extent=360, clockwise=False):
+    """
+    https://stackoverflow.com/a/61985797
+    TODO: make this start the ellipse tangent to the turtles current heading
+    TODO: allow this to go clockwise too
+
+    """
+    print(f'drawing ellipse {a=}, {b=}, {extent=}, {clockwise=}')
+    sign = -1 if clockwise else 1
 
      # We are multiplying by 0.875 because for making a complete ellipse we are plotting 315 pts according
-    converted_angle = int(angle * 0.875)
+    converted_angle = int(extent * 0.875)
 
     # drawing
     (h, k) = turtle.position() - (a, 0)
     for i in range(converted_angle + 1):
         x = h + a * math.cos(i/50)
-        y = k + b * math.sin(i/50)
+        y = k + b * math.sin(i/50) * sign
+        turtle.setheading(turtle.towards(x,y))
         turtle.goto(x, y)
