@@ -18,36 +18,28 @@ import random
 class TurtleChase:
     def __init__(self):
         self.fleet: List[Turtle] = []
-        self.new_turtle = None
         self.screen = Screen()
 
     def run(self):
         self.screen.onclick(self.on_click, btn=2)
-        # self.screen.ondrag(self.new_turtle.goto)
-        # self.screen.onrelease(self.on_release)
         self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
 
     def on_click(self, x, y):
-        self.new_turtle = Turtle()
-        self.new_turtle.setundobuffer(None)
-        print(self.new_turtle.undobuffer)
-        place(self.new_turtle, x, y)
-        self.new_turtle.speed('slowest')
-        self.new_turtle.penup()
+        new_turtle = Turtle()
+        new_turtle.setundobuffer(None)
+        place(new_turtle, x, y)
+        new_turtle.speed('slowest')
+        new_turtle.penup()
         # allow himb to be dragged
-        self.new_turtle.ondrag(self.new_turtle.goto)
+        new_turtle.ondrag(new_turtle.goto)
 
         # nudge(turtle)
-        # self.fleet.append(turtle)
+        self.fleet.append(new_turtle)
 
-    def on_release(self, x, y):
-        self.fleet.append(self.new_turtle)
-        self.new_turtle = None
 
     def on_mouse_move(self, x, y):
         # print(x, y)
-        return
         for turtle in self.fleet:
             angle = turtle.towards(x, y)
             print(f'{angle=}')
