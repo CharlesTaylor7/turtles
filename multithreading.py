@@ -2,6 +2,9 @@ from queue import Queue
 import threading
 import turtle
 
+
+# multi threading example:
+# https://stackoverflow.com/a/44833522
 def push_command(handler, *args, **kwargs):
     command_queue.put((handler, args, kwargs))
 

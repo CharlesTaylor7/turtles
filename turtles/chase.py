@@ -16,12 +16,6 @@ __all__ = ['turtle_chase']
 # - Roomba: turtle moves in clean orderly lines up and down
 # - turtle writes out a message
 
-# set turtle shapes
-# register_shape('turtle.gif')
-# shape('turtle.gif')
-
-# multi threading example:
-# https://stackoverflow.com/a/44833522
 
 
 class TurtleChase:
