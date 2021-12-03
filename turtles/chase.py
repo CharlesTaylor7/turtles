@@ -28,6 +28,7 @@ class TurtleChase:
         self.busy = False
         self.screen = Screen()
         self.screen.bgcolor('black')
+        self.y = 400
 
     def start(self):
         self.screen.onclick(self.on_click, btn=2)
@@ -49,12 +50,9 @@ class TurtleChase:
         # mark busy
         self.busy = True
 
-        # clear previous phrase
-        if self.turtle:
-            self.turtle.reset()
-
         # summon a turtle
-        self.turtle = new_turtle(color='green', size=3, teleport=False, speed='slowest')
+        self.y -= 120
+        self.turtle = new_turtle(x=-600, y=self.y, color='green', size=3, teleport=False, speed='slowest')
 
         # write the phrase
         alphabet.write(self.turtle, phrase)

@@ -8,11 +8,7 @@ from turtles.utils import copy_turtle, retreat, walk, ellipse
 
 __all__ = ['write']
 
-
 def write(turtle: Turtle, phrase: str) -> None:
-    phrase = 'AV'
-    # walk(turtle, (-400, 0))
-
     # character width
     width = 100
     # space between characters
@@ -21,7 +17,9 @@ def write(turtle: Turtle, phrase: str) -> None:
 
     for c in phrase:
         print(f'drawing \'{c}\'')
-        strokes = characters[c]
+        strokes = characters.get(c)
+        if strokes is None:
+            return
 
         # turtles initial for this character 
         p = turtle.position()
@@ -99,6 +97,15 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=90, offset=(w/4, h/2), path='forward', args=(h/2,)),
             Stroke(heading=0, path='forward', args=(w/2,)),
         ],
+        'F': [
+            Stroke(heading=180, offset=(3*w/4, 0), path='forward', args=(w/2,)),
+            Stroke(heading=90, path='forward', args=(h/2,)),
+            Stroke(heading=0, path='forward', args=(w/2,)),
+            Stroke(heading=90, offset=(w/4, h/2), path='forward', args=(h/2,)),
+            Stroke(heading=0, path='forward', args=(w/2,)),
+        ],
+
+
         'G': [
             Stroke(heading=135, path='circle', args=(s/2,315,),
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
@@ -118,6 +125,10 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
 
         'V': [
             Stroke(heading=-a, offset=(a_x, s), path='forward', args=(a_r,)),
+            Stroke(heading=a, path='forward', args=(a_r,)),
+        ],
+        'W': [
+            Stroke(heading=-a, offset=(0, s), path='forward', args=(a_r,)),
             Stroke(heading=a, path='forward', args=(a_r,)),
         ],
         ' ': [],
