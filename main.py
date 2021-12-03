@@ -4,12 +4,10 @@ from threading import Timer
 import random
 
 # ideas
-# - on every click the turtle turns at random and moves 100 steps forward
-# - turtle chases the mouse in real time
-# - fleet of turtles
+# - turtle army march
 # - crazy shit, like turtles chasing each other while changing color and speeding up and slowing down randomly
 # - Roomba: turtle moves in clean orderly lines up and down
-# - every click spawns a new turtle
+# - turtle writes out a message
 
 # set turtle shapes
 # register_shape('turtle.gif')
@@ -19,6 +17,8 @@ class TurtleChase:
     def __init__(self):
         self.fleet: List[Turtle] = []
         self.screen = Screen()
+        self.colors = ['red', 'green', 'blue', 'magenta','yellow', 'cyan']
+        self.turtle_index = -1
 
     def run(self):
         self.screen.bgcolor('black')
@@ -27,17 +27,28 @@ class TurtleChase:
         mainloop()
 
     def on_click(self, x, y):
+        # bump the turtle index
+        self.turtle_index += 1
+
+        # initialize the turtle
         turtle = Turtle()
         turtle.setundobuffer(None)
         place(turtle, x, y)
         turtle.speed('slowest')
-        turtle.fillcolor('green')
-        turtle.pencolor('green')
-        turtle.pensize('2')
+
+        # set color
+        color_index = self.turtle_index % len(self.colors)
+        color = self.colors[color_index]
+        turtle.fillcolor(color)
+        turtle.pencolor(color)
+        # set size
+        turtle.pensize('3')
+
         # allow himb to be dragged
         turtle.onclick(lambda *args: turtle.penup())
         turtle.ondrag(turtle.goto)
         turtle.onrelease(lambda *args: turtle.pendown())
+
         turtle.circle(30)
         spin(turtle)
         nudge(turtle)
