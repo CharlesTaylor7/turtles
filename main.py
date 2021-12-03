@@ -24,13 +24,16 @@ def main():
 # num_clicks = 0
 
 def onClick(x, y):
-    fleet.append(Turtle())
+    turtle = Turtle()
+    turtle.setx(x)
+    turtle.sety(y)
+    fleet.append(turtle)
 
     # global num_clicks
     # num_clicks += 1
-    random_angle = random.randrange(1, 360, 1)
-    turtle.right(random_angle)
-    turtle.forward(100)
+#    random_angle = random.randrange(1, 360, 1)
+#    turtle.right(random_angle)
+#    turtle.forward(100)
 
 
 main()
