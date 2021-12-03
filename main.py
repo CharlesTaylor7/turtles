@@ -29,12 +29,14 @@ class TurtleChase:
         turtle = Turtle()
         turtle.speed('slowest')
         place(turtle, x, y)
-        nudge(turtle)
+        # nudge(turtle)
         self.fleet.append(turtle)
 
     def on_mouse_move(self, x, y):
         for turtle in self.fleet:
-            turtle.left(turtle.towards(x, y))
+            angle = turtle.towards(x, y)
+            print(f'{angle=}')
+            turtle.left(angle)
 
     def reset_throttle(self):
         self.throttle = False
@@ -45,7 +47,9 @@ class TurtleChase:
 
         def event_handler(event):
             if self.throttle:
+                print('throttled')
                 return
+            print(event)
             handler(screen.cv.canvasx(event.x), -screen.cv.canvasy(event.y))
             self.throttle = True
 
