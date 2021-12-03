@@ -1,5 +1,5 @@
 from typing import List
-from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer
+from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput
 import threading
 from threading import Timer, Thread
 import random
@@ -24,24 +24,43 @@ __all__ = ['turtle_chase']
 
 class TurtleChase:
     def __init__(self):
-        self.screen = Screen()
         self.turtle = None
+        self.busy = False
+
+        self.screen = Screen()
         self.screen.bgcolor('black')
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
 
-    def run(self):
-        alphabet.write(self.turtle, 'GET OUT!')
-        self.turtle = None
-
     def on_click(self, _x, _y):
-        if self.turtle:
+        if self.busy:
             print('I am very small, so you can imagine the kind of stress that I am under')
             return
-        x, y = (0, 0)
-        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False, speed='slowest')
-        self.run()
+
+        # mark busy
+        self.busy = True
+
+        # ask for input
+        phrase = textinput('???', '?')
+
+        # if we receive no input, abort
+        if not phrase:
+            self.busy = False
+            return
+
+        # clear previous phrase
+        if self.turtle:
+            self.turtle.reset()
+
+        # summon a turtle
+        self.turtle = new_turtle(color='green', size=3, teleport=False, speed='slowest')
+
+        # write the phrase
+        alphabet.write(self.turtle, phrase)
+
+        # mark available
+        self.busy = False
 
     def on_mouse_move(self, x, y):
         if not self.turtle:

@@ -9,10 +9,10 @@ __all__ = ['new_turtle', 'copy_turtle']
 
 
 def new_turtle(
-    x,
-    y,
     color,
     size,
+    x: float = 0,
+    y: float = 0,
     heading=None,
     speed='slowest',
     teleport=False,
@@ -24,6 +24,7 @@ def new_turtle(
     t.pencolor(color)
     t.pensize(size)
     t.speed(speed)
+    t.speed(10) # delete this
     position(t, x, y, heading, teleport=teleport)
     return t
 
@@ -76,8 +77,10 @@ def walk(turtle: Turtle, position: Tuple[float, float]):
     turtle.goto(x, y)
     turtle.pendown()
 
+
 def spin(turtle: Turtle) -> None:
     turtle.left(random.randint(1, 360))
+
 
 def nudge(turtle: Turtle) -> None:
     def move():
@@ -90,8 +93,6 @@ def ellipse(turtle, a, b, extent=360, clockwise=False):
     """
     https://stackoverflow.com/a/61985797
     TODO: make this start the ellipse tangent to the turtles current heading
-    TODO: allow this to go clockwise too
-
     """
     # ellipse takes a while to draw, so temporarily override speed
     speed = turtle.speed()
