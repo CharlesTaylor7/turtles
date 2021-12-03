@@ -7,7 +7,7 @@ from queue import Queue
 from turtles.utils import new_turtle
 from turtles import alphabet
 
-__all__ = ['turtle_chase']
+__all__ = ['TurtleChase']
 
 
 # ideas
@@ -26,9 +26,10 @@ class TurtleChase:
     def __init__(self):
         self.turtle = None
         self.busy = False
-
         self.screen = Screen()
         self.screen.bgcolor('black')
+
+    def start(self):
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
@@ -38,16 +39,15 @@ class TurtleChase:
             print('I am very small, so you can imagine the kind of stress that I am under')
             return
 
-        # mark busy
-        self.busy = True
-
         # ask for input
         phrase = textinput('???', '?')
 
-        # if we receive no input, abort
-        if not phrase:
-            self.busy = False
-            return
+        if phrase:
+            draw(phrase)
+
+    def draw(self, phrase: str):
+        # mark busy
+        self.busy = True
 
         # clear previous phrase
         if self.turtle:
@@ -82,6 +82,3 @@ class TurtleChase:
             screen.cv.unbind('<Motion>')
         else:
             screen.cv.bind('<Motion>', event_handler)
-
-
-turtle_chase = TurtleChase()

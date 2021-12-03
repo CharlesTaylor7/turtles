@@ -6,18 +6,18 @@ from turtle import Turtle, Vec2D
 from turtles.utils import copy_turtle, retreat, walk, ellipse
 
 
-
 __all__ = ['write']
 
+
 def write(turtle: Turtle, phrase: str) -> None:
-    walk(turtle, (-400, 0))
+    phrase = 'AV'
+    # walk(turtle, (-400, 0))
 
     # character width
     width = 100
-    height = 100
     # space between characters
     margin = 20
-    characters = character_set(width=float(width), height=float(height))
+    characters = character_set(width=float(width))
 
     for c in phrase:
         print(f'drawing \'{c}\'')
@@ -68,17 +68,24 @@ class Stroke:
     offset: Optional[Tuple[float, float]] = None
 
 
-def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
+def character_set(width: float) -> Dict[str, List[Stroke]]:
     w = width
-    h = height
-
+    h = width
     s = width
     bh = 1.5*s
+    # incline of the letters A, & V
+    a = 70
+    # hypotneuse of the letters A & V
+    a_r = s / math.sin(to_radians(a))
+    # width under 1 stroke of A or V
+    a_w = s * math.tan(to_radians(90-a))
+    # relative shift to the right for the whole letter (A & V)
+    a_x = (s -  2 * a_w) / 2
     return {
         'A': [
-            Stroke(heading=60, path='forward', args=(s,)),
-            Stroke(heading=-60, path='forward', args=(s,)),
-            Stroke(heading=0, offset=(s/4, (s/4) * math.sqrt(3)), path='forward', args=(s/2,)),
+            Stroke(heading=a, offset=(a_x, 0), path='forward', args=(a_r,)),
+            Stroke(heading=-a, path='forward', args=(a_r,)),
+            Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path='forward', args=(a_w,)),
         ],
         'B': [
             Stroke(heading=90, path='forward', args=(bh,)),
@@ -99,7 +106,7 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=180, path='forward', args=(s/2,)),
         ],
         'O': [
-            Stroke(heading=0, offset=(s/2, 0), path='circle', args=(s/2,360,)),
+            Stroke(heading=0, offset=(s/2, 0), path='circle', args=(s/2,)),
         ],
         'T': [
             Stroke(heading=0, offset=(0, s), path='forward', args=(s,)),
@@ -107,6 +114,11 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
         ],
         'U': [
             Stroke(heading=-90, offset=(s, s), path=ellipse, kwargs=dict(a=s/2, b=s, extent=180, clockwise=True))
+        ],
+
+        'V': [
+            Stroke(heading=-a, offset=(a_x, s), path='forward', args=(a_r,)),
+            Stroke(heading=a, path='forward', args=(a_r,)),
         ],
         ' ': [],
         '!': [
@@ -124,4 +136,4 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
     }
 
 def to_radians(degrees: float):
-    return math.PI * degrees / 180
+    return math.pi * degrees / 180

@@ -1,4 +1,7 @@
-from turtles.chase import turtle_chase
+from turtles.chase import TurtleChase
 
 
-turtle_chase.run()
+turtle_chase = TurtleChase()
+turtle_chase.draw('AV')
+
+turtle_chase.start()
