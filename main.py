@@ -1,5 +1,5 @@
-import turtle
-from turtle import Turtle, getscreen, mainloop, register_shape
+from typing import List
+from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer
 import random
 
 # ideas
@@ -11,29 +11,67 @@ import random
 # - every click spawns a new turtle
 
 # set turtle shapes
-turtle.addshape('turtle.gif')
-turtle.shape('turtle.gif')
+# register_shape('turtle.gif')
+# shape('turtle.gif')
 
-fleet = []
+class TurtleChase:
+    def __init__(self):
+        self.fleet: List[Turtle] = []
+        self.screen = Screen()
+        self.throttle = False
 
-def main():
-    screen = getscreen()
-    screen.onclick(onClick)
-    mainloop()
+    def run(self):
+        self.screen.onclick(self.on_click)
+        self.set_on_mouse_move_handler(self.on_mouse_move)
+        mainloop()
 
-# num_clicks = 0
+    def on_click(self, x, y):
+        turtle = Turtle()
+        turtle.speed('slowest')
+        place(turtle, x, y)
+        nudge(turtle)
+        self.fleet.append(turtle)
 
-def onClick(x, y):
-    turtle = Turtle()
-    turtle.setx(x)
-    turtle.sety(y)
-    fleet.append(turtle)
+    def on_mouse_move(self, x, y):
+        for turtle in self.fleet:
+            turtle.left(turtle.towards(x, y))
 
-    # global num_clicks
-    # num_clicks += 1
-#    random_angle = random.randrange(1, 360, 1)
-#    turtle.right(random_angle)
-#    turtle.forward(100)
+    def reset_throttle(self):
+        self.throttle = False
+
+    # https://stackoverflow.com/a/44214001
+    def set_on_mouse_move_handler(self, handler):
+        screen = self.screen
+
+        def event_handler(event):
+            if self.throttle:
+                return
+            handler(screen.cv.canvasx(event.x), -screen.cv.canvasy(event.y))
+            self.throttle = True
+
+            ontimer(self.reset_throttle, 400)
+
+        if handler is None:
+            screen.cv.unbind('<Motion>')
+        else:
+            screen.cv.bind('<Motion>', event_handler)
 
 
-main()
+def nudge(turtle):
+    def move():
+        turtle.forward(10)
+        ontimer(move, 400)
+
+    move()
+
+
+def place(turtle, x, y):
+    current_speed = turtle.speed()
+    turtle.speed(0)
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+    turtle.speed(current_speed)
+
+
+TurtleChase().run()
