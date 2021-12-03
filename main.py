@@ -32,7 +32,6 @@ class TurtleChase:
 
     def run(self):
         self.screen.bgcolor('black')
-        self.screen.tracer(2)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
         self.process_queue()
@@ -52,10 +51,10 @@ class TurtleChase:
         self.turtle_index += 1
 
         # initialize the turtle
-        turtle = Turtle()
+        turtle = Turtle('turtle')
         turtle.setundobuffer(None)
         place(turtle, x, y)
-        # turtle.speed('slowest')
+        turtle.speed('fastest')
 
         # set color
         color_index = self.turtle_index % len(self.colors)
