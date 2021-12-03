@@ -1,7 +1,10 @@
 from typing import List
 from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer
-from threading import Timer
+import threading
+from threading import Timer, Thread
 import random
+from queue import Queue
+
 
 # ideas
 # - turtle army march
@@ -13,18 +16,36 @@ import random
 # register_shape('turtle.gif')
 # shape('turtle.gif')
 
+# multi threading example:
+# https://stackoverflow.com/a/44833522
+
+
 class TurtleChase:
     def __init__(self):
         self.fleet: List[Turtle] = []
         self.screen = Screen()
         self.colors = ['red', 'green', 'blue', 'magenta','yellow', 'cyan']
         self.turtle_index = -1
+        num_cores = 4
+        self.command_queue = Queue(num_cores - 1)
+
 
     def run(self):
         self.screen.bgcolor('black')
+        self.screen.tracer(2)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
+        self.process_queue()
         mainloop()
+
+    def process_queue(self):
+        while not self.command_queue.empty():
+            self.command_queue.get()()
+
+        ontimer(self.process_queue, 100)
+
+    def push_command(self, command):
+        self.command_queue.put(command)
 
     def on_click(self, x, y):
         # bump the turtle index
@@ -34,7 +55,7 @@ class TurtleChase:
         turtle = Turtle()
         turtle.setundobuffer(None)
         place(turtle, x, y)
-        turtle.speed('slowest')
+        # turtle.speed('slowest')
 
         # set color
         color_index = self.turtle_index % len(self.colors)
@@ -44,16 +65,10 @@ class TurtleChase:
         # set size
         turtle.pensize('3')
 
-        # allow himb to be dragged
-        turtle.onclick(lambda *args: turtle.penup())
-        turtle.ondrag(turtle.goto)
-        turtle.onrelease(lambda *args: turtle.pendown())
+        TurtleThread(turtle, self.command_queue.put).start()
+        # self.fleet.append(turtle)
 
-        turtle.circle(30)
-        spin(turtle)
-        nudge(turtle)
-        self.fleet.append(turtle)
-
+    # causes program to crash
     def on_mouse_move(self, x, y):
         for turtle in self.fleet:
             angle = turtle.towards(x, y)
@@ -73,18 +88,6 @@ class TurtleChase:
             screen.cv.bind('<Motion>', event_handler)
 
 
-def spin(turtle):
-    turtle.left(random.randint(1, 360))
-
-
-def nudge(turtle):
-    def move():
-        turtle.forward(10)
-        ontimer(move, 400)
-
-    move()
-
-
 def place(turtle, x, y):
     current_speed = turtle.speed()
     turtle.speed(0)
@@ -92,6 +95,32 @@ def place(turtle, x, y):
     turtle.goto(x, y)
     turtle.pendown()
     turtle.speed(current_speed)
+
+
+class TurtleThread(Thread):
+    def __init__(self, turtle, push_command):
+        super().__init__(daemon=True)
+        self.turtle = turtle
+        self.push_command = push_command
+
+    def run(self):
+        self.circle()
+        self.spin()
+        self.nudge()
+
+    def spin(self):
+        self.push_command(lambda: self.turtle.left(random.randint(1, 360)))
+
+    def nudge(self):
+        def move():
+            self.push_command(lambda: self.turtle.forward(10))
+            ontimer(move, 400)
+        move()
+
+    def circle(self):
+        for _ in range(360):
+            self.push_command(lambda: self.turtle.forward(1))
+            self.push_command(lambda: self.turtle.left(1))
 
 
 TurtleChase().run()
