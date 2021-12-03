@@ -92,10 +92,14 @@ def ellipse(turtle, a, b, extent=360, clockwise=False):
     TODO: allow this to go clockwise too
 
     """
+    # ellipse takes a while to draw, so temporarily override speed
+    speed = turtle.speed()
+    turtle.speed('fastest')
+
     print(f'drawing ellipse {a=}, {b=}, {extent=}, {clockwise=}')
     sign = -1 if clockwise else 1
 
-     # We are multiplying by 0.875 because for making a complete ellipse we are plotting 315 pts according
+    # We are multiplying by 0.875 because for making a complete ellipse we are plotting 315 pts according
     converted_angle = int(extent * 0.875)
 
     # drawing
@@ -105,3 +109,5 @@ def ellipse(turtle, a, b, extent=360, clockwise=False):
         y = k + b * math.sin(i/50) * sign
         turtle.setheading(turtle.towards(x,y))
         turtle.goto(x, y)
+
+    turtle.speed(speed)

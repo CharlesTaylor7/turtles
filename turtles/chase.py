@@ -37,12 +37,12 @@ class TurtleChase:
         alphabet.write(self.turtle, 'GET OUT')
         self.turtle = None
 
-    def on_click(self, x, y):
+    def on_click(self, _x, _y):
         if self.turtle:
             print('I am very small, so you can imagine the kind of stress that I am under')
             return
-        x, y = (0, 0) # delete this
-        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False, speed='fastest')
+        x, y = (-100, -100)
+        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False, speed='slowest')
         self.run()
 
     def on_mouse_move(self, x, y):

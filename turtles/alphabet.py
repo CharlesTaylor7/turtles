@@ -10,10 +10,8 @@ from turtles.utils import copy_turtle, retreat, walk, ellipse
 __all__ = ['write']
 
 def write(turtle: Turtle, phrase: str) -> None:
-    #ellipse(turtle, 50, 75, clockwise=True)
 
     phrase = 'BA' # delete this
-    # phrase = 'BA' # delete this
 
     # character width
     width = 50
