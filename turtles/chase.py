@@ -4,9 +4,8 @@ import threading
 from threading import Timer, Thread
 import random
 from queue import Queue
-# import alphabet
 from turtles.utils import new_turtle
-from turtles.threads import TurtleThread
+from turtles import alphabet
 
 __all__ = ['turtle_chase']
 
@@ -27,55 +26,34 @@ __all__ = ['turtle_chase']
 
 class TurtleChase:
     def __init__(self):
-        self.fleet: List[Turtle] = []
         self.screen = Screen()
-        self.colors = ['red', 'green', 'blue', 'magenta','yellow', 'cyan']
-        self.turtle_index = -1
-        num_cores = 4
-        self.command_queue = Queue(num_cores - 1)
-
-    def run(self):
+        self.turtle = None
         self.screen.bgcolor('black')
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
-        self.process_queue()
         mainloop()
 
-    def process_queue(self):
-        while not self.command_queue.empty():
-            handler, args, kwargs = self.command_queue.get()()
-            handler(*args, **kwargs)
-
-        ontimer(self.process_queue, 100)
-
-    def push_command(self, handler, *args, **kwargs):
-        self.command_queue.put((handler, args, kwargs))
+    def run(self):
+        alphabet.write(self.turtle, 'GET OUT')
+        self.turtle = None
 
     def on_click(self, x, y):
-        # bump the turtle index
-        self.turtle_index += 1
+        if self.turtle:
+            print('I am very small, so you can imagine the kind of stress that I am under')
+            return
 
-        # initialize the turtle
-        turtle = new_turtle(x, y)
+        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False)
+        self.run()
 
-        # set color
-        color_index = self.turtle_index % len(self.colors)
-        color = self.colors[color_index]
-        turtle.fillcolor(color)
-        turtle.pencolor(color)
-        # set size
-        turtle.pensize('3')
-
-        TurtleThread(turtle).start()
-        # self.fleet.append(turtle)
-
-    # causes program to crash
     def on_mouse_move(self, x, y):
-        for turtle in self.fleet:
-            angle = turtle.towards(x, y)
-            print(f'{angle=}')
-            turtle.left(angle)
+        if not self.turtle:
+            return
+        turtle = self.turtle
+        angle = turtle.towards(x, y)
+        print(f'{angle=}')
+        turtle.left(angle)
 
+    # causes program to crash if to many commands are issued at once
     # https://stackoverflow.com/a/44214001
     def set_on_mouse_move_handler(self, handler):
         screen = self.screen
