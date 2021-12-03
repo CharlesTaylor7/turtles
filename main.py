@@ -22,7 +22,7 @@ class TurtleChase:
         self.screen = Screen()
 
     def run(self):
-        self.screen.onclick(self.on_click)
+        self.screen.onclick(self.on_click, btn=2)
         # self.screen.ondrag(self.new_turtle.goto)
         # self.screen.onrelease(self.on_release)
         self.set_on_mouse_move_handler(self.on_mouse_move)
