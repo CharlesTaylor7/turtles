@@ -21,25 +21,29 @@ class TurtleChase:
         self.screen = Screen()
 
     def run(self):
+        self.screen.bgcolor('black')
         self.screen.onclick(self.on_click, btn=2)
-        self.set_on_mouse_move_handler(self.on_mouse_move)
+        # self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
 
     def on_click(self, x, y):
-        new_turtle = Turtle()
-        new_turtle.setundobuffer(None)
-        place(new_turtle, x, y)
-        new_turtle.speed('slowest')
-        new_turtle.penup()
+        turtle = Turtle()
+        turtle.setundobuffer(None)
+        place(turtle, x, y)
+        turtle.speed('slowest')
+        turtle.fillcolor('green')
+        turtle.pencolor('green')
+        turtle.pensize('2')
         # allow himb to be dragged
-        new_turtle.ondrag(new_turtle.goto)
-
-        # nudge(turtle)
-        self.fleet.append(new_turtle)
-
+        turtle.onclick(lambda *args: turtle.penup())
+        turtle.ondrag(turtle.goto)
+        turtle.onrelease(lambda *args: turtle.pendown())
+        turtle.circle(30)
+        spin(turtle)
+        nudge(turtle)
+        self.fleet.append(turtle)
 
     def on_mouse_move(self, x, y):
-        # print(x, y)
         for turtle in self.fleet:
             angle = turtle.towards(x, y)
             print(f'{angle=}')
@@ -58,10 +62,14 @@ class TurtleChase:
             screen.cv.bind('<Motion>', event_handler)
 
 
+def spin(turtle):
+    turtle.left(random.randint(1, 360))
+
+
 def nudge(turtle):
     def move():
         turtle.forward(10)
-        ontimer(move, 400, add=True)
+        ontimer(move, 400)
 
     move()
 
