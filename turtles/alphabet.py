@@ -3,14 +3,24 @@ from typing import List, Tuple, Callable, Optional, Dict
 from dataclasses import dataclass
 from turtle import Turtle
 
-from turtles.utils import copy_turtle, retreat, walk
+from turtles.utils import copy_turtle, retreat, walk, ellipse
 
 
 
 __all__ = ['write']
 
 def write(turtle: Turtle, phrase: str) -> None:
-    phrase = 'A' # delete this
+    ellipse(turtle, 50, 75)
+
+    phrase = 'BA' # delete this
+    # phrase = 'BA' # delete this
+
+    # character width
+    turtle.shapesize(5)
+    width = 50
+    # space between characters
+    margin = 10
+    characters = character_set(width=float(width))
 
     for c in phrase:
         strokes = characters[c]
@@ -39,24 +49,19 @@ class Stroke:
     # none indicates to resume from whereever it is
     offset: Optional[Tuple[int, int]] = None
 
-characters: Dict[str, List[Stroke]] = dict(
-    A=[
-        Stroke(heading=60, path='forward', args=(50,)),
-        Stroke(heading=-60, path='forward', args=(50,)),
-        Stroke(offset=(12.5, 12.5 * math.sqrt(3)), heading=0, path='forward', args=(25,)),
-    ],
-)
 
-def A(turtle):
-
-    turtle.left(60)
-    turtle.forward(50)
-    copy = copy_turtle(turtle)
-    copy.right(60)
-    copy.forward(45)
-    retreat(copy)
-    turtle.forward(50)
-    turtle.right(120)
-    turtle.forward(100)
-    retreat(turtle)
-
+def character_set(width: float) -> Dict[str, List[Stroke]]:
+    s = width
+    bh = 1.5*s
+    return dict(
+        A=[
+            Stroke(heading=60, path='forward', args=(s,)),
+            Stroke(heading=-60, path='forward', args=(s,)),
+            Stroke(offset=(s/4, (s/4) * math.sqrt(3)), heading=0, path='forward', args=(s/2,)),
+        ],
+        B=[
+            Stroke(heading=90, path='forward', args=(bh,)),
+            Stroke(heading=0, path='circle', args=(-bh/4, 180,)),
+            Stroke(heading=0, path='circle', args=(-bh/4, 180,)),
+        ],
+    )

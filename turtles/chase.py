@@ -41,8 +41,8 @@ class TurtleChase:
         if self.turtle:
             print('I am very small, so you can imagine the kind of stress that I am under')
             return
-
-        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False)
+        x, y = (0, 0) # delete this
+        self.turtle = new_turtle(x=x, y=y, color='green', size=3, teleport=False, speed='fastest')
         self.run()
 
     def on_mouse_move(self, x, y):

@@ -1,6 +1,8 @@
+import math
+import random
+
 from typing import Optional, Tuple
 from turtle import Turtle
-import random
 
 
 __all__ = ['new_turtle', 'copy_turtle']
@@ -15,6 +17,7 @@ def new_turtle(
     speed='slowest',
     teleport=False,
 ) -> Turtle:
+    print(f'Turtle {x=}, {y=}, {color=}, {size=}, {speed=}, {teleport=}')
     t = Turtle(shape='turtle')
     t.setundobuffer(None)
     t.fillcolor(color)
@@ -81,7 +84,16 @@ def nudge(turtle: Turtle) -> None:
         ontimer(move, 400)
     move()
 
-def circle(turtle: Turtle) -> None:
-    for _ in range(360):
-        turtle.forward(1)
-        turtle.left(1)
+
+def ellipse(turtle, a, b, angle=360):
+    print(f'drawing ellipse {a=}, {b=}, {angle=}')
+
+     # We are multiplying by 0.875 because for making a complete ellipse we are plotting 315 pts according
+    converted_angle = int(angle * 0.875)
+
+    # drawing
+    (h, k) = turtle.position() - (a, 0)
+    for i in range(converted_angle + 1):
+        x = h + a * math.cos(i/50)
+        y = k + b * math.sin(i/50)
+        turtle.goto(x, y)
