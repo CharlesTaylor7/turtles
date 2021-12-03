@@ -1,3 +1,4 @@
+import turtle
 from turtle import Turtle, getscreen, mainloop, register_shape
 import random
 
@@ -8,7 +9,10 @@ import random
 # - crazy shit, like turtles chasing each other while changing color and speeding up and slowing down randomly
 # - Roomba: turtle moves in clean orderly lines up and down
 # - every click spawns a new turtle
-register_shape('turtle.gif')
+
+# set turtle shapes
+turtle.addshape('turtle.gif')
+turtle.shape('turtle.gif')
 
 fleet = []
 
