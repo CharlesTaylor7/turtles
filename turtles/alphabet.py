@@ -6,6 +6,7 @@ from typeguard import typechecked
 from adt import adt, Case
 
 from turtles.utils import copy_turtle, retreat, walk, ellipse, to_radians, forward, circle
+from turtles.config import settings
 
 
 
@@ -45,8 +46,9 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                 print(f'taking path {s.path.__name__} {s.args} {s.kwargs}')
                 s.path(turtle, *s.args, **s.kwargs)
 
-            for s in characters['DEBUG']:
-                apply_stroke(s)
+            if settings.debug:
+                for s in characters['DEBUG']:
+                    apply_stroke(s)
 
             for s in strokes:
                 apply_stroke(s)
@@ -93,6 +95,16 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     a_w = s * math.tan(to_radians(90-a))
     # relative shift to the right for the whole letter (A & V)
     a_x = (s -  2 * a_w) / 2
+
+    # angle of the letter W
+    W_heading = 76
+    W_th = to_radians(W_heading)
+    W_r = s / math.sin(W_th)
+    # x displacement under 1 stroke of the W
+    W_x = s * math.tan(to_radians(90 - W_heading))
+    # relative x shift for the whole letter
+    W_shift_x = (s - 4 * W_x) / 2
+    print(W_shift_x)
     return {
         'A': [
             Stroke(heading=a, offset=(a_x, 0), path=forward, args=(a_r,)),
@@ -140,8 +152,10 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=a, path=forward, args=(a_r,)),
         ],
         'W': [
-            Stroke(heading=-a, offset=(0, s), path=forward, args=(a_r,)),
-            Stroke(heading=a, path=forward, args=(a_r,)),
+            Stroke(heading=-W_heading, offset=(W_shift_x, s), path=forward, args=(W_r,)),
+            Stroke(heading=W_heading, path=forward, args=(W_r,)),
+            Stroke(heading=-W_heading, path=forward, args=(W_r,)),
+            Stroke(heading=W_heading, path=forward, args=(W_r,)),
         ],
         ' ': [],
         '!': [

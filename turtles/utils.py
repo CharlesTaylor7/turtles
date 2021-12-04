@@ -4,6 +4,8 @@ import random
 from typing import Optional, Tuple, Literal, Union
 from turtle import Turtle, ontimer
 
+from turtles.config import settings
+
 
 __all__ = ['new_turtle', 'copy_turtle']
 
@@ -29,8 +31,7 @@ def new_turtle(
     t.fillcolor(color)
     t.pencolor(color)
     t.pensize(size)
-    t.speed(speed)
-    t.speed(10) # delete this
+    t.speed(speed if not settings.debug else 0)
     position(t, x, y, heading, teleport=teleport)
     return t
 
