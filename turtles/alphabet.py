@@ -4,9 +4,11 @@ from dataclasses import dataclass, field
 from turtle import Turtle, Vec2D
 
 from turtles.utils import copy_turtle, retreat, walk, ellipse
+from typeguard import typechecked
 
 
 __all__ = ['write']
+
 
 def write(turtle: Turtle, phrase: str) -> None:
     # character width
@@ -22,11 +24,12 @@ def write(turtle: Turtle, phrase: str) -> None:
             return
 
         # turtles initial for this character 
-        p = turtle.position()
+        p: Vec2D = turtle.position()
 
-        def apply_stroke(s):
+        def apply_stroke(s: Stroke) -> None:
             if s.offset:
-                walk(turtle, cast(Vec2D, p + s.offset))
+                (x, y) = s.offset
+                walk(turtle, add(p, vector(x, y)))
             turtle.setheading(s.heading)
             print(f'taking path {s.path} {s.args} {s.kwargs}')
 
@@ -44,11 +47,21 @@ def write(turtle: Turtle, phrase: str) -> None:
         for s in strokes:
             apply_stroke(s)
 
-
         # advance to next character
-        walk(turtle, p + (width + margin, 0))
+        walk(turtle, add(p, vector(width + margin, 0)))
 
     retreat(turtle)
+
+
+def vector(x: float, y: float) -> Vec2D:
+    # mypy does not believe Vec2D is a callable constructor
+    return Vec2D(x, y) # type: ignore[operator]
+
+
+@typechecked
+def add(a: Vec2D,  b: Vec2D) -> Vec2D:
+    # Vec2D has an overriden + operator which performs vector addition
+    return a + b #type: ignore[return-value]
 
 
 @dataclass
@@ -104,8 +117,6 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=90, offset=(w/4, h/2), path='forward', args=(h/2,)),
             Stroke(heading=0, path='forward', args=(w/2,)),
         ],
-
-
         'G': [
             Stroke(heading=135, path='circle', args=(s/2,315,),
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
@@ -146,5 +157,5 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
         ],
     }
 
-def to_radians(degrees: float):
+def to_radians(degrees: float) -> float:
     return math.pi * degrees / 180

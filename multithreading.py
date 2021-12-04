@@ -1,3 +1,4 @@
+# type: ignore
 from queue import Queue
 import threading
 import turtle

@@ -1,21 +1,27 @@
 import math
 import random
 
-from typing import Optional, Tuple
-from turtle import Turtle
+from typing import Optional, Tuple, Literal, Union
+from turtle import Turtle, ontimer
 
 
 __all__ = ['new_turtle', 'copy_turtle']
 
 
+TurtleSpeed = Literal[
+    'slowest', 'slow', 'normal', 'fast', 'fastest',
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+]
+
+
 def new_turtle(
-    color,
-    size,
+    color: str,
+    size: int,
     x: float = 0,
     y: float = 0,
-    heading=None,
-    speed='slowest',
-    teleport=False,
+    heading: Optional[float] = None,
+    speed: TurtleSpeed = 'slowest',
+    teleport: bool = False,
 ) -> Turtle:
     print(f'Turtle {x=}, {y=}, {color=}, {size=}, {speed=}, {teleport=}')
     t = Turtle(shape='turtle')
@@ -32,17 +38,17 @@ def new_turtle(
 def copy_turtle(turtle: Turtle) -> Turtle:
     (x, y) = turtle.position()
     return new_turtle(
-        x,
-        y,
+        x=x,
+        y=y,
         color=turtle.fillcolor(),
         size=turtle.pensize(),
         heading=turtle.heading(),
-        speed=turtle.speed(),
+        speed=turtle.speed(), # type: ignore[arg-type]
         teleport=True,
     )
 
 
-def position(turtle: Turtle, x, y, heading: Optional[float], teleport) -> None:
+def position(turtle: Turtle, x: float, y: float, heading: Optional[float], teleport: bool) -> None:
     if teleport:
         current_speed = turtle.speed()
         turtle.speed(0)
@@ -61,12 +67,12 @@ def position(turtle: Turtle, x, y, heading: Optional[float], teleport) -> None:
         turtle.setheading(heading)
 
 
-def retreat(turtle: Turtle):
+def retreat(turtle: Turtle) -> None:
     walk(turtle, (0, 0))
     turtle.hideturtle()
 
 
-def walk(turtle: Turtle, position: Tuple[float, float]):
+def walk(turtle: Turtle, position: Tuple[float, float]) -> None:
     """
     walk without drawing
     """
@@ -83,13 +89,13 @@ def spin(turtle: Turtle) -> None:
 
 
 def nudge(turtle: Turtle) -> None:
-    def move():
+    def move() -> None:
         turtle.forward(10)
         ontimer(move, 400)
     move()
 
 
-def ellipse(turtle, a, b, extent=360, clockwise=False):
+def ellipse(turtle: Turtle, a: float, b: float, extent: float = 360, clockwise: bool = False) -> None:
     """
     https://stackoverflow.com/a/61985797
     TODO: make this start the ellipse tangent to the turtles current heading
@@ -105,7 +111,8 @@ def ellipse(turtle, a, b, extent=360, clockwise=False):
     converted_angle = int(extent * 0.875)
 
     # drawing
-    (h, k) = turtle.position() - (a, 0)
+    (p_x, k) = turtle.position()
+    h = p_x - a
     for i in range(converted_angle + 1):
         x = h + a * math.cos(i/50)
         y = k + b * math.sin(i/50) * sign
