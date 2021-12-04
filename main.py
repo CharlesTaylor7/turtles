@@ -3,9 +3,6 @@ from turtles.chase import TurtleChase
 
 turtle_chase = TurtleChase()
 turtle_chase.draw([
-    'U',
-])
-"""
     'WAVMN',
     'PBR'
     'CD',
@@ -13,6 +10,5 @@ turtle_chase.draw([
     'KXYZ',
     'OGQJSU',
 ])
-"""
 
 turtle_chase.start()
