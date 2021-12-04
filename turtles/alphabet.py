@@ -104,7 +104,13 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     W_x = s * math.tan(to_radians(90 - W_heading))
     # relative x shift for the whole letter
     W_shift_x = (s - 4 * W_x) / 2
-    print(W_shift_x)
+
+    # M
+    M_heading = 55
+    M_th = to_radians(M_heading)
+    M_r = s / math.sin(M_th)
+    M_x = s * math.tan(to_radians(90 - M_heading))
+    M_shift_x = (s - M_x) / 2
     return {
         'A': [
             Stroke(heading=a, offset=(a_x, 0), path=forward, args=(a_r,)),
@@ -135,6 +141,12 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
             ),
             Stroke(heading=180, path=forward, args=(s/2,)),
+        ],
+        'M': [
+            Stroke(heading=90, offset=(M_shift_x, 0), path=forward, args=(s,)),
+            Stroke(heading=-M_heading, path=forward, args=(M_r/2,)),
+            Stroke(heading=M_heading, path=forward, args=(M_r/2,)),
+            Stroke(heading=-90, path=forward, args=(s,)),
         ],
         'O': [
             Stroke(heading=0, offset=(s/2, 0), path=circle, args=(s/2,)),
