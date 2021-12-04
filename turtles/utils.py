@@ -107,16 +107,28 @@ def ellipse(turtle: Turtle, a: float, b: float, extent: float = 360, clockwise: 
     print(f'drawing ellipse {a=}, {b=}, {extent=}, {clockwise=}')
     sign = -1 if clockwise else 1
 
-    # We are multiplying by 0.875 because for making a complete ellipse we are plotting 315 pts according
-    converted_angle = int(extent * 0.875)
+    d = 10
+    num_steps = int(d * extent / 360.0)
 
     # drawing
     (p_x, k) = turtle.position()
     h = p_x - a
-    for i in range(converted_angle + 1):
-        x = h + a * math.cos(i/50)
-        y = k + b * math.sin(i/50) * sign
+    for n in range(num_steps + 1):
+        t = (n/d) * 2 * math.pi
+        x = h + a * math.cos(t)
+        y = k + b * math.sin(t) * sign
         turtle.setheading(turtle.towards(x,y))
         turtle.goto(x, y)
 
     turtle.speed(speed)
+
+
+def to_radians(degrees: float) -> float:
+    return math.pi * degrees / 180
+
+
+def forward(turtle: Turtle, pixels: float) -> None:
+    turtle.forward(pixels)
+
+def circle(turtle: Turtle, radius: float, extent: Optional[float] = None) -> None:
+    turtle.circle(radius, extent)

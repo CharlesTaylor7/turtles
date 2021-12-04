@@ -1,6 +1,6 @@
 import random
 
-from typing import List, Callable, cast, Optional
+from typing import List, Callable, cast, Optional, Iterable
 from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput
 from queue import Queue
 from adt import adt
@@ -28,7 +28,6 @@ class TurtleChase:
         self.busy = False
         self.screen = Screen()
         self.screen.bgcolor('black')
-        self.y = 400
 
     def start(self) -> Void:
         self.screen.onclick(self.on_click, btn=2)
@@ -46,16 +45,15 @@ class TurtleChase:
         if phrase:
             self.draw(phrase)
 
-    def draw(self, phrase: str) -> None:
+    def draw(self, lines: Iterable[str]) -> None:
         # mark busy
         self.busy = True
 
         # summon a turtle
-        self.y -= 120
-        self.turtle = new_turtle(x=-600, y=self.y, color='green', size=3, teleport=False, speed='slowest')
+        self.turtle = new_turtle(x=0, y=0, color='green', size=3, teleport=False, speed='slowest')
 
         # write the phrase
-        alphabet.write(self.turtle, phrase)
+        alphabet.write(self.turtle, lines)
 
         # mark available
         self.busy = False

@@ -1,54 +1,55 @@
 import math
 from typing import List, Tuple, Callable, Optional, Dict, Union, Iterable, cast
-from dataclasses import dataclass, field
 from turtle import Turtle, Vec2D
-
-from turtles.utils import copy_turtle, retreat, walk, ellipse
+from dataclasses import dataclass, field
 from typeguard import typechecked
+from adt import adt, Case
+
+from turtles.utils import copy_turtle, retreat, walk, ellipse, to_radians, forward, circle
+
 
 
 __all__ = ['write']
 
 
-def write(turtle: Turtle, phrase: str) -> None:
+def write(turtle: Turtle, lines: Iterable[str]) -> None:
     # character width
     width = 100
     # space between characters
     margin = 20
     characters = character_set(width=float(width))
+    shift = width + margin
+    (x, y) = (-600, 300)
+    for (j, phrase) in enumerate(lines):
+        for (i, c) in enumerate(phrase):
+            print(f'drawing \'{c}\'')
+            strokes = characters.get(c)
+            if strokes is None:
+                print(f'skipping undefined \'{c}\'')
+                continue
 
-    for c in phrase:
-        print(f'drawing \'{c}\'')
-        strokes = characters.get(c)
-        if strokes is None:
-            return
+            # walk to next character
+            walk(turtle, (x + i * shift, y - j * shift))
 
-        # turtles initial for this character 
-        p: Vec2D = turtle.position()
+            # turtles initial position for this character 
+            p: Vec2D = turtle.position()
 
-        def apply_stroke(s: Stroke) -> None:
-            if s.offset:
-                (x, y) = s.offset
-                walk(turtle, add(p, vector(x, y)))
-            turtle.setheading(s.heading)
-            print(f'taking path {s.path} {s.args} {s.kwargs}')
+            def apply_stroke(s: Stroke) -> None:
+                if s.offset:
+                    (x, y) = s.offset
+                    walk(turtle, add(p, vector(x, y)))
 
-            # call method of turtle by looking up the attribute
-            if isinstance(s.path, str):
-                getattr(turtle, s.path)(*s.args, **s.kwargs)
+                print(f'heading at {s.heading}')
+                turtle.setheading(s.heading)
 
-            # call utility by using the passed callable
-            else:
+                print(f'taking path {s.path.__name__} {s.args} {s.kwargs}')
                 s.path(turtle, *s.args, **s.kwargs)
 
-        for s in characters['DEBUG']:
-            apply_stroke(s)
+            for s in characters['DEBUG']:
+                apply_stroke(s)
 
-        for s in strokes:
-            apply_stroke(s)
-
-        # advance to next character
-        walk(turtle, add(p, vector(width + margin, 0)))
+            for s in strokes:
+                apply_stroke(s)
 
     retreat(turtle)
 
@@ -70,7 +71,7 @@ class Stroke:
     heading: float
     # path to follow and its args
     # path is a string attribute which should be callable on the turtle class
-    path: Union[str, Callable]
+    path: Callable
     args: tuple = field(default_factory=tuple)
     kwargs: dict = field(default_factory=dict)
 
@@ -94,68 +95,67 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     a_x = (s -  2 * a_w) / 2
     return {
         'A': [
-            Stroke(heading=a, offset=(a_x, 0), path='forward', args=(a_r,)),
-            Stroke(heading=-a, path='forward', args=(a_r,)),
-            Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path='forward', args=(a_w,)),
+            Stroke(heading=a, offset=(a_x, 0), path=forward, args=(a_r,)),
+            Stroke(heading=-a, path=forward, args=(a_r,)),
+            Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path=forward, args=(a_w,)),
         ],
         'B': [
-            Stroke(heading=90, path='forward', args=(bh,)),
+            Stroke(heading=90, path=forward, args=(bh,)),
             Stroke(heading=0, path=ellipse, args=(bh/4, bh, 180), kwargs=dict(clockwise=True)),
             Stroke(heading=0, path=ellipse, args=(bh/4, bh, 180), kwargs=dict(clockwise=True)),
         ],
         'E': [
-            Stroke(heading=180, offset=(3*w/4, 0), path='forward', args=(w/2,)),
-            Stroke(heading=90, path='forward', args=(h/2,)),
-            Stroke(heading=0, path='forward', args=(w/2,)),
-            Stroke(heading=90, offset=(w/4, h/2), path='forward', args=(h/2,)),
-            Stroke(heading=0, path='forward', args=(w/2,)),
+            Stroke(heading=180, offset=(3*w/4, 0), path=forward, args=(w/2,)),
+            Stroke(heading=90, path=forward, args=(h/2,)),
+            Stroke(heading=0, path=forward, args=(w/2,)),
+            Stroke(heading=90, offset=(w/4, h/2), path=forward, args=(h/2,)),
+            Stroke(heading=0, path=forward, args=(w/2,)),
         ],
         'F': [
-            Stroke(heading=180, offset=(3*w/4, 0), path='forward', args=(w/2,)),
-            Stroke(heading=90, path='forward', args=(h/2,)),
-            Stroke(heading=0, path='forward', args=(w/2,)),
-            Stroke(heading=90, offset=(w/4, h/2), path='forward', args=(h/2,)),
-            Stroke(heading=0, path='forward', args=(w/2,)),
+            Stroke(heading=180, offset=(3*w/4, 0), path=forward, args=(w/2,)),
+            Stroke(heading=90, path=forward, args=(h/2,)),
+            Stroke(heading=0, path=forward, args=(w/2,)),
+            Stroke(heading=90, offset=(w/4, h/2), path=forward, args=(h/2,)),
+            Stroke(heading=0, path=forward, args=(w/2,)),
         ],
         'G': [
-            Stroke(heading=135, path='circle', args=(s/2,315,),
+            Stroke(heading=135, path=circle, args=(s/2,315,),
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
             ),
-            Stroke(heading=180, path='forward', args=(s/2,)),
+            Stroke(heading=180, path=forward, args=(s/2,)),
         ],
         'O': [
-            Stroke(heading=0, offset=(s/2, 0), path='circle', args=(s/2,)),
+            Stroke(heading=0, offset=(s/2, 0), path=circle, args=(s/2,)),
         ],
         'T': [
-            Stroke(heading=0, offset=(0, s), path='forward', args=(s,)),
-            Stroke(heading=-90, offset=(s/2, s), path='forward', args=(s,)),
+            Stroke(heading=0, offset=(0, s), path=forward, args=(s,)),
+            Stroke(heading=-90, offset=(s/2, s), path=forward, args=(s,)),
         ],
         'U': [
             Stroke(heading=-90, offset=(s, s), path=ellipse, kwargs=dict(a=s/2, b=s, extent=180, clockwise=True))
         ],
 
         'V': [
-            Stroke(heading=-a, offset=(a_x, s), path='forward', args=(a_r,)),
-            Stroke(heading=a, path='forward', args=(a_r,)),
+            Stroke(heading=-a, offset=(a_x, s), path=forward, args=(a_r,)),
+            Stroke(heading=a, path=forward, args=(a_r,)),
         ],
         'W': [
-            Stroke(heading=-a, offset=(0, s), path='forward', args=(a_r,)),
-            Stroke(heading=a, path='forward', args=(a_r,)),
+            Stroke(heading=-a, offset=(0, s), path=forward, args=(a_r,)),
+            Stroke(heading=a, path=forward, args=(a_r,)),
         ],
         ' ': [],
         '!': [
-            Stroke(heading=-90, offset=(s/2, s), path='forward', args=(8*s/10,)),
-            Stroke(heading=90, offset=(s/2, 0), path='forward', args=(s/20,)),
+            Stroke(heading=-90, offset=(s/2, s), path=forward, args=(8*s/10,)),
+            Stroke(heading=90, offset=(s/2, 0), path=forward, args=(s/20,)),
         ],
         '?': [
         ],
         'DEBUG': [
-            Stroke(heading=90, path='forward', args=(s,)),
-            Stroke(heading=0, path='forward', args=(s,)),
-            Stroke(heading=-90, path='forward', args=(s,)),
-            Stroke(heading=180, path='forward', args=(s,)),
+            Stroke(heading=90, path=forward, args=(s,)),
+            Stroke(heading=0, path=forward, args=(s,)),
+            Stroke(heading=-90, path=forward, args=(s,)),
+            Stroke(heading=180, path=forward, args=(s,)),
         ],
     }
 
-def to_radians(degrees: float) -> float:
-    return math.pi * degrees / 180
+
