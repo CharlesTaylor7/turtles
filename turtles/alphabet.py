@@ -5,9 +5,8 @@ from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
 
-from turtles.utils import copy_turtle, retreat, walk, ellipse, to_radians, forward, circle, vector
+from turtles.utils import retreat, walk, ellipse, to_radians, forward, circle, vector
 from turtles.config import settings
-
 
 
 __all__ = ['write']
@@ -32,7 +31,7 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
             # walk to next character
             walk(turtle, (x + i * shift, y - j * shift))
 
-            # turtles initial position for this character 
+            # turtles initial position for this character
             p: Vec2D = turtle.position()
 
             def apply_stroke(s: Stroke) -> None:
@@ -56,12 +55,10 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     retreat(turtle)
 
 
-
-
 @typechecked
-def add(a: Vec2D,  b: Vec2D) -> Vec2D:
+def add(a: Vec2D, b: Vec2D) -> Vec2D:
     # Vec2D has an overriden + operator which performs vector addition
-    return a + b #type: ignore[return-value]
+    return a + b  # type: ignore[return-value]
 
 
 @dataclass
@@ -83,7 +80,6 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     w = width
     h = width
     s = width
-    bh = 1.5*s
     # incline of the letters A, & V
     a = 70
     # hypotneuse of the letters A & V
@@ -91,7 +87,7 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     # width under 1 stroke of A or V
     a_w = s * math.tan(to_radians(90-a))
     # relative shift to the right for the whole letter (A & V)
-    a_x = (s -  2 * a_w) / 2
+    a_x = (s - 2 * a_w) / 2
 
     # angle of the letter W
     W_heading = 76
@@ -115,9 +111,9 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path=forward, args=(a_w,)),
         ],
         'B': [
-            Stroke(heading=90, path=forward, args=(bh,)),
-            Stroke(heading=0, path=ellipse, args=(bh/4, bh, 180), kwargs=dict(clockwise=True)),
-            Stroke(heading=0, path=ellipse, args=(bh/4, bh, 180), kwargs=dict(clockwise=True)),
+            Stroke(heading=90, path=forward, args=(s,)),
+            Stroke(heading=0, path=circle, args=(s/4, 180), kwargs=dict(clockwise=True)),
+            Stroke(heading=0, path=circle, args=(s/4, 180), kwargs=dict(clockwise=True)),
         ],
         'E': [
             Stroke(heading=180, offset=(3*w/4, 0), path=forward, args=(w/2,)),
@@ -134,7 +130,8 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=0, path=forward, args=(w/2,)),
         ],
         'G': [
-            Stroke(heading=135, path=circle, args=(s/2,315,),
+            Stroke(
+                heading=135, path=circle, args=(s/2, 315,),
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
             ),
             Stroke(heading=180, path=forward, args=(s/2,)),
@@ -180,5 +177,3 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=180, path=forward, args=(s,)),
         ],
     }
-
-

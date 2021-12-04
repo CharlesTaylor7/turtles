@@ -1,6 +1,6 @@
 import random
 
-from typing import List, Callable, cast, Optional, Iterable
+from typing import List, Callable, cast, Optional, Iterable, NoReturn
 from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput
 from queue import Queue
 from adt import adt
@@ -11,10 +11,6 @@ from turtles import alphabet
 
 
 __all__ = ['TurtleChase']
-
-@adt
-class Void:
-    pass
 
 
 class MouseEvent:
@@ -29,10 +25,10 @@ class TurtleChase:
         self.screen = Screen()
         self.screen.bgcolor('black')
 
-    def start(self) -> Void:
+    def start(self) -> NoReturn:  # type: ignore[misc]
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
-        return cast(Void, mainloop())
+        mainloop()
 
     def on_click(self, _x: float, _y: float) -> None:
         if self.busy:

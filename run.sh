@@ -1,1 +1,1 @@
-mypy . && python3 main.py
+mypy . && flake8 . && python3 main.py

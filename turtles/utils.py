@@ -44,7 +44,7 @@ def copy_turtle(turtle: Turtle) -> Turtle:
         color=turtle.fillcolor(),
         size=turtle.pensize(),
         heading=turtle.heading(),
-        speed=turtle.speed(), # type: ignore[arg-type]
+        speed=turtle.speed(),  # type: ignore[arg-type]
         teleport=True,
     )
 
@@ -148,5 +148,4 @@ def rotate(v: Vec2D, theta: float) -> Vec2D:
 
 def vector(x: float, y: float) -> Vec2D:
     # mypy does not believe Vec2D is a callable constructor
-    return Vec2D(x, y) # type: ignore[operator]
-
+    return Vec2D(x, y)  # type: ignore[operator]
