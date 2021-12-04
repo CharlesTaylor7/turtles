@@ -1,0 +1,318 @@
+2021-12-04 16:01:04,748 [PID 7058] INFO No binary specified, looking for `pyre.bin` in PATH
+2021-12-04 16:01:04,748 [PID 7058] INFO Could not determine the number of Pyre workers from configuration. Auto-set the value to 4.
+2021-12-04 16:01:04,748 [PID 7058] INFO No typeshed specified, looking for it...
+2021-12-04 16:01:04,749 [PID 7058] INFO Found: `/opt/homebrew/lib/pyre_check/typeshed`
+2021-12-04 16:01:04,750 [PID 7058] INFO Writing arguments into /var/folders/9g/t625xg5n5qx31jby28yz9s_40000gn/T/pyre_arguments_la66domq.json...
+2021-12-04 16:01:04,751 [PID 7058] DEBUG Arguments:
+{
+  "source_paths": {
+    "kind": "simple",
+    "paths": [
+      "/Users/chuck/repos/turtles"
+    ]
+  },
+  "search_paths": [
+    "/opt/homebrew/lib/pyre_check/typeshed/stdlib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/DateTimeRange",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Deprecated",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Flask",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/JACK-Client",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Jinja2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Markdown",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/MarkupSafe",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Pillow",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/PyMySQL",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/PyYAML",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Pygments",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Send2Trash",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Werkzeug",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/aiofiles",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/annoy",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/appdirs",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/atomicwrites",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/aws-xray-sdk",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/babel",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/backports.ssl_match_hostname",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/backports_abc",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/beautifulsoup4",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/bleach",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/boto",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/braintree",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/cachetools",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/caldav",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/certifi",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/characteristic",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/chardet",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/click",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/click-spinner",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/colorama",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/commonmark",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/contextvars",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/croniter",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/cryptography",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/dataclasses",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/dateparser",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/decorator",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/docopt",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/docutils",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/editdistance",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/emoji",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/entrypoints",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/filelock",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/first",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/freezegun",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/frozendict",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/html5lib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/httplib2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/humanfriendly",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/itsdangerous",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/jmespath",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/jsonschema",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mock",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mypy-extensions",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mysqlclient",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/oauthlib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/orjson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/paramiko",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/polib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/prettytable",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/protobuf",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/psutil",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/psycopg2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyOpenSSL",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyRFC3339",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyaudio",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pycurl",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyfarmhash",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pysftp",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pytest-lazy-fixture",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-dateutil",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-gflags",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-nmap",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-slugify",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pytz",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyvmomi",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/redis",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/requests",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/retry",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/selenium",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/setuptools",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/simplejson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/singledispatch",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/six",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/slumber",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/stripe",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/tabulate",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/termcolor",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/toml",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/toposort",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/ttkthemes",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/typed-ast",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/tzlocal",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/ujson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/vobject",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/waitress",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/xxhash"
+  ],
+  "excludes": [],
+  "checked_directory_allowlist": [
+    "/Users/chuck/repos/turtles"
+  ],
+  "checked_directory_blocklist": [],
+  "extensions": [],
+  "log_path": "/Users/chuck/repos/turtles/.pyre",
+  "global_root": "/Users/chuck/repos/turtles",
+  "debug": false,
+  "python_version": {
+    "major": 3,
+    "minor": 10,
+    "micro": 0
+  },
+  "shared_memory": {},
+  "parallel": true,
+  "number_of_workers": 4,
+  "additional_logging_sections": [],
+  "show_error_traces": false,
+  "strict": false
+}
+2021-12-04 16:01:06,389 [PID 7058] INFO Initializing shared memory [heap_size=8589934592, dep_table_pow=27, hash_table_pow=26]
+2021-12-04 16:01:06,397 [PID 7058] INFO Building module tracker...
+2021-12-04 16:01:06,499 [PID 7058] PERFORMANCE Module tracker built: 0.10s
+2021-12-04 16:01:06,499 [PID 7058] INFO Building type environment...
+2021-12-04 16:01:06,768 [PID 7058] INFO Parsing 1940 stubs and sources...
+2021-12-04 16:01:07,454 [PID 7058] PERFORMANCE Sources parsed: 0.69s
+2021-12-04 16:01:08,055 [PID 7058] PERFORMANCE Full environment built: 1.56s
+2021-12-04 16:01:08,323 [PID 7058] INFO Checking 40 functions...
+2021-12-04 16:01:08,387 [PID 7058] INFO Processed 40 of 40 functions
+2021-12-04 16:01:08,387 [PID 7058] PERFORMANCE Check_TypeCheck: 0.06s
+2021-12-04 16:01:08,387 [PID 7058] MEMORY Shared memory size post-typecheck (size: 14)
+2021-12-04 16:01:08,387 [PID 7058] INFO Postprocessing 1940 sources...
+2021-12-04 16:01:08,448 [PID 7058] INFO Postprocessed 243 of 1940 sources
+2021-12-04 16:01:08,454 [PID 7058] INFO Postprocessed 486 of 1940 sources
+2021-12-04 16:01:08,454 [PID 7058] INFO Postprocessed 729 of 1940 sources
+2021-12-04 16:01:08,462 [PID 7058] INFO Postprocessed 972 of 1940 sources
+2021-12-04 16:01:08,509 [PID 7058] INFO Postprocessed 1215 of 1940 sources
+2021-12-04 16:01:08,512 [PID 7058] INFO Postprocessed 1458 of 1940 sources
+2021-12-04 16:01:08,514 [PID 7058] INFO Postprocessed 1701 of 1940 sources
+2021-12-04 16:01:08,539 [PID 7058] INFO Postprocessed 1940 of 1940 sources
+2021-12-04 16:01:08,540 [PID 7058] PERFORMANCE Check: 2.14s
+2021-12-04 16:01:08,557 [PID 7058] ERROR Found 46 type errors!
+2021-12-04 16:02:45,904 [PID 9491] INFO No binary specified, looking for `pyre.bin` in PATH
+2021-12-04 16:02:45,904 [PID 9491] INFO Could not determine the number of Pyre workers from configuration. Auto-set the value to 4.
+2021-12-04 16:02:45,904 [PID 9491] INFO No typeshed specified, looking for it...
+2021-12-04 16:02:45,905 [PID 9491] INFO Found: `/opt/homebrew/lib/pyre_check/typeshed`
+2021-12-04 16:02:45,906 [PID 9491] INFO Writing arguments into /var/folders/9g/t625xg5n5qx31jby28yz9s_40000gn/T/pyre_arguments_9qi02o35.json...
+2021-12-04 16:02:45,906 [PID 9491] DEBUG Arguments:
+{
+  "source_paths": {
+    "kind": "simple",
+    "paths": [
+      "/Users/chuck/repos/turtles"
+    ]
+  },
+  "search_paths": [
+    "/opt/homebrew/lib/pyre_check/typeshed/stdlib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/DateTimeRange",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Deprecated",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Flask",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/JACK-Client",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Jinja2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Markdown",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/MarkupSafe",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Pillow",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/PyMySQL",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/PyYAML",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Pygments",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Send2Trash",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/Werkzeug",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/aiofiles",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/annoy",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/appdirs",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/atomicwrites",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/aws-xray-sdk",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/babel",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/backports.ssl_match_hostname",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/backports_abc",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/beautifulsoup4",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/bleach",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/boto",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/braintree",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/cachetools",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/caldav",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/certifi",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/characteristic",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/chardet",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/click",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/click-spinner",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/colorama",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/commonmark",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/contextvars",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/croniter",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/cryptography",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/dataclasses",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/dateparser",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/decorator",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/docopt",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/docutils",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/editdistance",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/emoji",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/entrypoints",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/filelock",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/first",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/freezegun",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/frozendict",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/html5lib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/httplib2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/humanfriendly",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/itsdangerous",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/jmespath",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/jsonschema",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mock",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mypy-extensions",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/mysqlclient",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/oauthlib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/orjson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/paramiko",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/polib",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/prettytable",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/protobuf",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/psutil",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/psycopg2",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyOpenSSL",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyRFC3339",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyaudio",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pycurl",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyfarmhash",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pysftp",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pytest-lazy-fixture",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-dateutil",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-gflags",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-nmap",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/python-slugify",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pytz",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/pyvmomi",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/redis",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/requests",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/retry",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/selenium",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/setuptools",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/simplejson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/singledispatch",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/six",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/slumber",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/stripe",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/tabulate",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/termcolor",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/toml",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/toposort",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/ttkthemes",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/typed-ast",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/tzlocal",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/ujson",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/vobject",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/waitress",
+    "/opt/homebrew/lib/pyre_check/typeshed/stubs/xxhash"
+  ],
+  "excludes": [],
+  "checked_directory_allowlist": [
+    "/Users/chuck/repos/turtles"
+  ],
+  "checked_directory_blocklist": [],
+  "extensions": [],
+  "log_path": "/Users/chuck/repos/turtles/.pyre",
+  "global_root": "/Users/chuck/repos/turtles",
+  "debug": false,
+  "python_version": {
+    "major": 3,
+    "minor": 10,
+    "micro": 0
+  },
+  "shared_memory": {},
+  "parallel": true,
+  "number_of_workers": 4,
+  "additional_logging_sections": [],
+  "show_error_traces": false,
+  "strict": false
+}
+2021-12-04 16:02:46,014 [PID 9491] INFO Initializing shared memory [heap_size=8589934592, dep_table_pow=27, hash_table_pow=26]
+2021-12-04 16:02:46,021 [PID 9491] INFO Building module tracker...
+2021-12-04 16:02:46,119 [PID 9491] PERFORMANCE Module tracker built: 0.10s
+2021-12-04 16:02:46,120 [PID 9491] INFO Building type environment...
+2021-12-04 16:02:46,413 [PID 9491] INFO Parsing 1940 stubs and sources...
+2021-12-04 16:02:47,102 [PID 9491] PERFORMANCE Sources parsed: 0.69s
+2021-12-04 16:02:47,729 [PID 9491] PERFORMANCE Full environment built: 1.61s
+2021-12-04 16:02:48,002 [PID 9491] INFO Checking 40 functions...
+2021-12-04 16:02:48,071 [PID 9491] INFO Processed 40 of 40 functions
+2021-12-04 16:02:48,071 [PID 9491] PERFORMANCE Check_TypeCheck: 0.07s
+2021-12-04 16:02:48,071 [PID 9491] MEMORY Shared memory size post-typecheck (size: 14)
+2021-12-04 16:02:48,071 [PID 9491] INFO Postprocessing 1940 sources...
+2021-12-04 16:02:48,132 [PID 9491] INFO Postprocessed 243 of 1940 sources
+2021-12-04 16:02:48,139 [PID 9491] INFO Postprocessed 486 of 1940 sources
+2021-12-04 16:02:48,139 [PID 9491] INFO Postprocessed 729 of 1940 sources
+2021-12-04 16:02:48,146 [PID 9491] INFO Postprocessed 972 of 1940 sources
+2021-12-04 16:02:48,195 [PID 9491] INFO Postprocessed 1215 of 1940 sources
+2021-12-04 16:02:48,195 [PID 9491] INFO Postprocessed 1458 of 1940 sources
+2021-12-04 16:02:48,199 [PID 9491] INFO Postprocessed 1701 of 1940 sources
+2021-12-04 16:02:48,224 [PID 9491] INFO Postprocessed 1940 of 1940 sources
+2021-12-04 16:02:48,225 [PID 9491] PERFORMANCE Check: 2.20s
+2021-12-04 16:02:48,243 [PID 9491] ERROR Found 46 type errors!
