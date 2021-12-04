@@ -1,11 +1,11 @@
 import math
-from typing import List, Tuple, Callable, Optional, Dict, Union, Iterable, cast
+from typing import List, Tuple, Callable, Optional, Dict, Union, Iterable, cast, Generic
 from turtle import Turtle, Vec2D
 from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
 
-from turtles.utils import retreat, walk, ellipse, to_radians, forward, circle, vector
+from turtles.utils import retreat, walk, ellipse, to_radians, line, circle, vector
 from turtles.config import settings
 
 
@@ -19,7 +19,8 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     margin = 20
     characters = character_set(width=float(width))
     shift = width + margin
-    (x, y) = (-600, 300)
+    # (x, y) = (-600, 300)
+    (x, y) = (-200, 100)
     for (j, phrase) in enumerate(lines):
         for (i, c) in enumerate(phrase):
             print(f'drawing \'{c}\'')
@@ -42,10 +43,10 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                 print(f'heading at {s.heading}')
                 turtle.setheading(s.heading)
 
-                print(f'taking path {s.path.__name__} {s.args} {s.kwargs}')
-                s.path(turtle, *s.args, **s.kwargs)
+                print(f'taking path {s.path.__name__} {s.kwargs}')
+                s.path(turtle, **s.kwargs)
 
-            if settings.debug:
+            if settings.draw_debug_box:
                 for s in characters['DEBUG']:
                     apply_stroke(s)
 
@@ -67,9 +68,8 @@ class Stroke:
     heading: float
     # path to follow and its args
     # path is a string attribute which should be callable on the turtle class
-    path: Callable
-    args: tuple = field(default_factory=tuple)
-    kwargs: dict = field(default_factory=dict)
+    path: Callable[..., None]
+    kwargs: dict
 
     # relative offset from the turtle's starting position
     # none indicates to resume from whereever it is
@@ -106,74 +106,88 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
     M_shift_x = (s - M_x) / 2
     return {
         'A': [
-            Stroke(heading=a, offset=(a_x, 0), path=forward, args=(a_r,)),
-            Stroke(heading=-a, path=forward, args=(a_r,)),
-            Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path=forward, args=(a_w,)),
+            Stroke(heading=a, offset=(a_x, 0), path=line, kwargs=dict(distance=a_r)),
+            Stroke(heading=-a, path=line, kwargs=dict(distance=a_r)),
+            Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path=line, kwargs=dict(distance=a_w)),
         ],
         'B': [
-            Stroke(heading=90, path=forward, args=(s,)),
-            Stroke(heading=0, path=circle, args=(s/4, 180), kwargs=dict(clockwise=True)),
-            Stroke(heading=0, path=circle, args=(s/4, 180), kwargs=dict(clockwise=True)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
+            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
         ],
         'E': [
-            Stroke(heading=180, offset=(3*w/4, 0), path=forward, args=(w/2,)),
-            Stroke(heading=90, path=forward, args=(h/2,)),
-            Stroke(heading=0, path=forward, args=(w/2,)),
-            Stroke(heading=90, offset=(w/4, h/2), path=forward, args=(h/2,)),
-            Stroke(heading=0, path=forward, args=(w/2,)),
+            Stroke(heading=180, offset=(3*w/4, 0), path=line, kwargs=dict(distance=w/2)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
+            Stroke(heading=90, offset=(w/4, h/2), path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
         ],
         'F': [
-            Stroke(heading=180, offset=(3*w/4, 0), path=forward, args=(w/2,)),
-            Stroke(heading=90, path=forward, args=(h/2,)),
-            Stroke(heading=0, path=forward, args=(w/2,)),
-            Stroke(heading=90, offset=(w/4, h/2), path=forward, args=(h/2,)),
-            Stroke(heading=0, path=forward, args=(w/2,)),
+            Stroke(heading=180, offset=(3*w/4, 0), path=line, kwargs=dict(distance=w/2)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
+            Stroke(heading=90, offset=(w/4, h/2), path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
         ],
         'G': [
             Stroke(
-                heading=135, path=circle, args=(s/2, 315,),
+                heading=135, path=circle, kwargs=dict(radius=s/2, extent=315),
                 offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
             ),
-            Stroke(heading=180, path=forward, args=(s/2,)),
+            Stroke(heading=180, path=line, kwargs=dict(distance=s/2)),
         ],
         'M': [
-            Stroke(heading=90, offset=(M_shift_x, 0), path=forward, args=(s,)),
-            Stroke(heading=-M_heading, path=forward, args=(M_r/2,)),
-            Stroke(heading=M_heading, path=forward, args=(M_r/2,)),
-            Stroke(heading=-90, path=forward, args=(s,)),
+            Stroke(heading=90, offset=(M_shift_x, 0), path=line, kwargs=dict(distance=s)),
+            Stroke(heading=-M_heading, path=line, kwargs=dict(distance=M_r/2)),
+            Stroke(heading=M_heading, path=line, kwargs=dict(distance=M_r/2)),
+            Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
         ],
         'O': [
-            Stroke(heading=0, offset=(s/2, 0), path=circle, args=(s/2,)),
+            Stroke(heading=0, offset=(s/2, 0), path=circle, kwargs=dict(radius=s/2)),
+        ],
+        'P': [
+            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
+        ],
+        'R': [
+            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
+            Stroke(heading=-0.75 * 90, path=line, kwargs=dict(distance=s/2)),
+        ],
+        'S': [
+            Stroke(heading=-90, path=circle, kwargs=dict(radius=s, extent=180, clockwise=False)),
+            Stroke(heading=135, path=line, kwargs=dict(distance=3*s)),
+            Stroke(heading=90, path=circle, kwargs=dict(radius=s, extent=180, clockwise=True)),
         ],
         'T': [
-            Stroke(heading=0, offset=(0, s), path=forward, args=(s,)),
-            Stroke(heading=-90, offset=(s/2, s), path=forward, args=(s,)),
+            Stroke(heading=0, offset=(0, s), path=line, kwargs=dict(distance=s)),
+            Stroke(heading=-90, offset=(s/2, s), path=line, kwargs=dict(distance=s)),
         ],
         'U': [
             Stroke(heading=-90, offset=(s, s), path=ellipse, kwargs=dict(a=s/2, b=s, extent=180, clockwise=True))
         ],
 
         'V': [
-            Stroke(heading=-a, offset=(a_x, s), path=forward, args=(a_r,)),
-            Stroke(heading=a, path=forward, args=(a_r,)),
+            Stroke(heading=-a, offset=(a_x, s), path=line, kwargs=dict(distance=a_r)),
+            Stroke(heading=a, path=line, kwargs=dict(distance=a_r)),
         ],
         'W': [
-            Stroke(heading=-W_heading, offset=(W_shift_x, s), path=forward, args=(W_r,)),
-            Stroke(heading=W_heading, path=forward, args=(W_r,)),
-            Stroke(heading=-W_heading, path=forward, args=(W_r,)),
-            Stroke(heading=W_heading, path=forward, args=(W_r,)),
+            Stroke(heading=-W_heading, offset=(W_shift_x, s), path=line, kwargs=dict(distance=W_r)),
+            Stroke(heading=W_heading, path=line, kwargs=dict(distance=W_r)),
+            Stroke(heading=-W_heading, path=line, kwargs=dict(distance=W_r)),
+            Stroke(heading=W_heading, path=line, kwargs=dict(distance=W_r)),
         ],
         ' ': [],
         '!': [
-            Stroke(heading=-90, offset=(s/2, s), path=forward, args=(8*s/10,)),
-            Stroke(heading=90, offset=(s/2, 0), path=forward, args=(s/20,)),
+            Stroke(heading=-90, offset=(s/2, s), path=line, kwargs=dict(distance=8*s/10)),
+            Stroke(heading=90, offset=(s/2, 0), path=line, kwargs=dict(distance=s/20)),
         ],
         '?': [
         ],
         'DEBUG': [
-            Stroke(heading=90, path=forward, args=(s,)),
-            Stroke(heading=0, path=forward, args=(s,)),
-            Stroke(heading=-90, path=forward, args=(s,)),
-            Stroke(heading=180, path=forward, args=(s,)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=180, path=line, kwargs=dict(distance=s)),
         ],
     }

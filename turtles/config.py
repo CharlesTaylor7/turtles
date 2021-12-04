@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 
+from turtles.types import TurtleSpeed
+
 
 @dataclass
 class Config:
-    debug: bool = False
+    turtle_speed: TurtleSpeed = 'normal'
+    draw_debug_box: bool = False
 
 
-settings = Config(debug=True)
+settings = Config()

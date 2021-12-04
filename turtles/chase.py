@@ -46,7 +46,7 @@ class TurtleChase:
         self.busy = True
 
         # summon a turtle
-        self.turtle = new_turtle(x=0, y=0, color='green', size=3, teleport=False, speed='slowest')
+        self.turtle = new_turtle(x=0, y=0, color='green', size=3, teleport=False)
 
         # write the phrase
         alphabet.write(self.turtle, lines)

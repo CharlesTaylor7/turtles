@@ -1,4 +1,5 @@
 expression
 algebraic-data-types
+typing-extensions
 typeguard
 mypy
