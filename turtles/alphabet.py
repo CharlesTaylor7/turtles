@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
 
-from turtles.utils import copy_turtle, retreat, walk, ellipse, to_radians, forward, circle
+from turtles.utils import copy_turtle, retreat, walk, ellipse, to_radians, forward, circle, vector
 from turtles.config import settings
 
 
@@ -56,9 +56,6 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     retreat(turtle)
 
 
-def vector(x: float, y: float) -> Vec2D:
-    # mypy does not believe Vec2D is a callable constructor
-    return Vec2D(x, y) # type: ignore[operator]
 
 
 @typechecked

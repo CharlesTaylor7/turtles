@@ -2,7 +2,7 @@ import math
 import random
 
 from typing import Optional, Tuple, Literal, Union
-from turtle import Turtle, ontimer
+from turtle import Turtle, ontimer, Vec2D
 
 from turtles.config import settings
 
@@ -96,6 +96,18 @@ def nudge(turtle: Turtle) -> None:
     move()
 
 
+def to_radians(degrees: float) -> float:
+    return math.pi * degrees / 180
+
+
+def forward(turtle: Turtle, pixels: float) -> None:
+    turtle.forward(pixels)
+
+
+def circle(turtle: Turtle, radius: float, extent: Optional[float] = None) -> None:
+    turtle.circle(radius, extent)
+
+
 def ellipse(turtle: Turtle, a: float, b: float, extent: float = 360, clockwise: bool = False) -> None:
     """
     https://stackoverflow.com/a/61985797
@@ -104,6 +116,7 @@ def ellipse(turtle: Turtle, a: float, b: float, extent: float = 360, clockwise: 
     # ellipse takes a while to draw, so temporarily override speed
     speed = turtle.speed()
     turtle.speed('fastest')
+    theta = to_radians(turtle.heading() - 90)
 
     print(f'drawing ellipse {a=}, {b=}, {extent=}, {clockwise=}')
     sign = -1 if clockwise else 1
@@ -112,24 +125,28 @@ def ellipse(turtle: Turtle, a: float, b: float, extent: float = 360, clockwise: 
     num_steps = int(d * extent / 360.0)
 
     # drawing
-    (p_x, k) = turtle.position()
+    (p_x, p_y) = turtle.position()
     h = p_x - a
+    k = p_y
     for n in range(num_steps + 1):
         t = (n/d) * 2 * math.pi
         x = h + a * math.cos(t)
         y = k + b * math.sin(t) * sign
-        turtle.setheading(turtle.towards(x,y))
+        (x, y) = rotate(vector(x, y), theta)
+        turtle.setheading(turtle.towards(x, y))
         turtle.goto(x, y)
 
     turtle.speed(speed)
 
 
-def to_radians(degrees: float) -> float:
-    return math.pi * degrees / 180
+def rotate(v: Vec2D, theta: float) -> Vec2D:
+    (x, y) = v
+    cos_theta = math.cos(theta)
+    sin_theta = math.sin(theta)
+    return vector(x * cos_theta - y * sin_theta, x * sin_theta + y * cos_theta)
 
 
-def forward(turtle: Turtle, pixels: float) -> None:
-    turtle.forward(pixels)
+def vector(x: float, y: float) -> Vec2D:
+    # mypy does not believe Vec2D is a callable constructor
+    return Vec2D(x, y) # type: ignore[operator]
 
-def circle(turtle: Turtle, radius: float, extent: Optional[float] = None) -> None:
-    turtle.circle(radius, extent)
