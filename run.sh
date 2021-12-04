@@ -1,1 +1,1 @@
-mypy . && flake8 . && python3 "$1.py"
+mypy . && python3 "$1.py"
