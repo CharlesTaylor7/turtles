@@ -12,17 +12,6 @@ from turtles import alphabet
 
 __all__ = ['TurtleChase']
 
-
-# ideas
-# - turtle army march
-# - crazy shit, like turtles chasing each other while changing color and speeding up and slowing down randomly
-# - Roomba: turtle moves in clean orderly lines up and down
-# - turtle writes out a message
-
-# TODO:
-# - finish character set, with all 26 capital letters, and !, ?
-# - Make turtle start and stop on timer while drawing straight lines, so that he matches his ellipse speed
-
 @adt
 class Void:
     pass
