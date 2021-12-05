@@ -1,7 +1,7 @@
 import math
 import random
 
-from typing import Optional, Callable, TypeVar, Type, overload, Any
+from typing import Optional, TypeVar, Type, Any
 from turtle import Turtle, RawTurtle, ontimer, Vec2D
 from typeguard import typechecked
 
@@ -9,39 +9,8 @@ from turtles.config import settings
 from turtles.types import TurtleSpeed, Point
 
 
-class DancingTurtle(Turtle):
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
-        self.dancing = False
-
-    def stop(self) -> None:
-        self.dancing = False
-
-    def dance(self) -> None:
-        self.dancing = True
-        motion = 30
-        interval = 400
-        # move to initial position
-        self.setheading(90 + motion / 2)
-
-        def left() -> None:
-            if not self.dancing:
-                return
-            set_color(self, 'magenta')
-            self.left(motion)
-            ontimer(right, interval)  # type: ignore
-
-        def right() -> None:
-            if not self.dancing:
-                return
-            set_color(self, 'cyan')
-            self.right(motion)
-            ontimer(left, interval)
-
-        right()
-
-
 T = TypeVar('T', bound=RawTurtle)
+
 
 def new_turtle(
     turtle_class: Type[T],
@@ -176,3 +145,35 @@ def vector(x: float, y: float) -> Vec2D:
 def add(a: Vec2D, b: Vec2D) -> Vec2D:
     # Vec2D has an overriden + operator which performs vector addition
     return a + b  # type: ignore[return-value]
+
+
+class DancingTurtle(Turtle):
+    def __init__(self, *args: Any, **kwargs: Any):
+        super().__init__(*args, **kwargs)
+        self.dancing = False
+
+    def stop_dancing(self) -> None:
+        self.dancing = False
+
+    def dance(self) -> None:
+        self.dancing = True
+        motion = 30
+        interval = 400
+        # move to initial position
+        self.setheading(90 + motion / 2)
+
+        def left() -> None:
+            if not self.dancing:
+                return
+            set_color(self, 'magenta')
+            self.left(motion)
+            ontimer(right, interval)  # type: ignore
+
+        def right() -> None:
+            if not self.dancing:
+                return
+            set_color(self, 'cyan')
+            self.right(motion)
+            ontimer(left, interval)
+
+        right()

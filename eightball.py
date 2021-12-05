@@ -1,6 +1,6 @@
 import random
 
-from typing import Optional, Iterable, Any, Callable
+from typing import Optional, Iterable, Any
 from turtles.editor import publish
 from turtles.utils import new_turtle, DancingTurtle
 
@@ -8,12 +8,11 @@ from turtle import mainloop, Turtle, Screen, textinput
 
 
 answers = [
-    ['we made it up',],
-    ['pure fiction',],
-    ['I am very small', 'so you can', 'imagine the kind', 'of stress', 'that I am under',],
-    ['henlo fren',],
+    ['we made it up'],
+    ['pure fiction'],
+    ['I am very small', 'so you can', 'imagine the kind', 'of stress', 'that I am under'],
+    ['henlo fren'],
 ]
-
 
 
 def shout(article: Iterable[str]) -> Iterable[str]:
@@ -22,8 +21,8 @@ def shout(article: Iterable[str]) -> Iterable[str]:
     )
 
 
-def reset(turtle: Turtle) -> None:
-    getattr(turtle, 'stop_dance', lambda: None)()
+def reset(turtle: DancingTurtle) -> None:
+    turtle.stop_dancing()
     turtle.reset()
     turtle.speed(0)
     turtle.fillcolor('green')
@@ -31,7 +30,7 @@ def reset(turtle: Turtle) -> None:
     turtle.pensize(3)
 
 
-def on_click(screen: Any, turtle: Turtle) -> None:
+def on_click(screen: Any, turtle: DancingTurtle) -> None:
     def wrapped(_x: float, _y: float) -> None:
         # ask for input
         phrase: Optional[str] = textinput('What is your question?', '')
@@ -40,7 +39,7 @@ def on_click(screen: Any, turtle: Turtle) -> None:
             reset(turtle)
             article = random.choice(answers)
             publish(turtle, shout(article))
-            turtle.stop_dance = dance(turtle)  # type: ignore
+            turtle.dance()
 
     screen.onclick(wrapped)
 

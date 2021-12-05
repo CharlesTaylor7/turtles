@@ -16,7 +16,6 @@ class Path:
     def shift(self, vector: Vec2D) -> 'Path':
         return Path(vector + self.start, vector + self.end)  # type: ignore
 
-
     def draw(self, turtle: Turtle) -> None:
         utils.walk(turtle, self.start)
         turtle.setheading(turtle.towards(self.end))
