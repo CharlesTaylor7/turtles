@@ -107,12 +107,14 @@ def to_radians(degrees: float) -> float:
 
 
 def line_to(turtle: Turtle, end: Point) -> None:
-    (e_x, e_y) = end
-    (x, y) = turtle.char_position  # type: ignore
-    turtle.goto(e_x + x, e_y + y)
+    (x, y) = turtle.char_position + end  # type: ignore
+    turtle.setheading(turtle.towards(x, y))
+    turtle.goto(x, y)
 
 
-def line(turtle: Turtle, distance: float) -> None:
+def line(turtle: Turtle, distance: float, heading: Optional[float] = None) -> None:
+    if heading is not None:
+        turtle.setheading(heading)
     turtle.forward(distance)
 
 

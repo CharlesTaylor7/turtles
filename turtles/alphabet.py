@@ -22,7 +22,7 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     shift_x = width + margin
     shift_y = height + margin
     # (x, y) = (-600, 300)
-    (x, y) = (-100)
+    (x, y) = (-300, 0)
     for (j, phrase) in enumerate(lines):
         for (i, c) in enumerate(phrase):
             print(f'drawing \'{c}\'')
@@ -43,8 +43,9 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                     (x, y) = s.offset
                     walk(turtle, add(p, vector(x, y)))
 
-                print(f'heading at {s.heading}')
-                turtle.setheading(s.heading)
+                if s.heading is not None:
+                    print(f'heading at {s.heading}')
+                    turtle.setheading(s.heading)
 
                 print(f'taking path {s.path.__name__} {s.kwargs}')
                 s.path(turtle, **s.kwargs)
@@ -61,12 +62,13 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
 
 @dataclass
 class Stroke:
-    # initial heading
-    heading: float
     # path to follow and its args
     # path is a string attribute which should be callable on the turtle class
     path: Callable[..., None]
     kwargs: dict
+
+    # initial heading
+    heading: Optional[float] = None
 
     # relative offset from the turtle's starting position
     # none indicates to resume from whereever it is
@@ -129,6 +131,17 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=M_heading, path=line, kwargs=dict(distance=M_r/2)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
         ],
+        'O': [
+            Stroke(offset=(0, h/8), path=line, kwargs=dict(heading=90, distance=3*h/4)),
+            Stroke(path=line_to, kwargs=dict(end=(w/4, h))),
+            Stroke(path=line, kwargs=dict(distance=w/2, heading=0)),
+            Stroke(path=line_to, kwargs=dict(end=(w, 7*h/8))),
+            Stroke(path=line, kwargs=dict(heading=-90, distance=3*h/4)),
+            Stroke(path=line_to, kwargs=dict(end=(3*w/4, 0))),
+            Stroke(path=line, kwargs=dict(distance=w/2, heading=180)),
+            Stroke(path=line_to, kwargs=dict(end=(0, h/8))),
+        ],
+
         'S': [
             Stroke(heading=-90, offset=(0, h/8), path=line, kwargs=dict(distance=h/8)),
             Stroke(heading=0, path=line, kwargs=dict(distance=w)),
@@ -156,7 +169,7 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
         ],
         'Z': [
             Stroke(heading=0, offset=(0, h), path=line, kwargs=dict(distance=w)),
-            Stroke(heading=-120, path=line_to, kwargs=dict(end=(0,0))),
+            Stroke(path=line_to, kwargs=dict(end=(0,0))),
             Stroke(heading=0, path=line, kwargs=dict(distance=w)),
             Stroke(heading=0, offset=(w/4, h/2), path=line, kwargs=dict(distance=w/2)),
         ],
