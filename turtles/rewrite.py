@@ -47,7 +47,7 @@ def rewrite() -> None:
         for s in strokes:
             apply_stroke(s)
 
-    with open('new_char_set.py', 'w') as file:
+    with open('new_char_set.py', 'a') as file:
         file.write(str(new))
 
 

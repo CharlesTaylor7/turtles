@@ -1,7 +1,17 @@
 from typing import Literal, Tuple
+from dataclasses import dataclass
 
 
 Point = Tuple[float, float]
+
+
+@dataclass
+class Path:
+    start: Point
+    end: Point
+
+
+
 
 
 TurtleSpeed = Literal[
