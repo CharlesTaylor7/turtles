@@ -14,10 +14,11 @@ __all__ = ['write']
 
 def write(turtle: Turtle, lines: Iterable[str]) -> None:
     # character width
-    width = 100
+    width = 50
     # space between characters
-    margin = 20
-    characters = character_set(width=float(width))
+    margin = 10
+    height = 100
+    characters = character_set(width=float(width), height=float(height))
     shift = width + margin
     # (x, y) = (-600, 300)
     (x, y) = (-200, 100)
@@ -76,9 +77,11 @@ class Stroke:
     offset: Optional[Tuple[float, float]] = None
 
 
-def character_set(width: float) -> Dict[str, List[Stroke]]:
+# we're replacing all the curved lines with straight lines for a more consistent aesthetic
+
+def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
     w = width
-    h = width
+    h = height
     s = width
     # incline of the letters A, & V
     a = 70
@@ -110,11 +113,6 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=-a, path=line, kwargs=dict(distance=a_r)),
             Stroke(heading=0, offset=(a_x + a_w/2, a_r/2), path=line, kwargs=dict(distance=a_w)),
         ],
-        'B': [
-            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
-            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
-        ],
         'E': [
             Stroke(heading=180, offset=(3*w/4, 0), path=line, kwargs=dict(distance=w/2)),
             Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
@@ -129,48 +127,18 @@ def character_set(width: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=90, offset=(w/4, h/2), path=line, kwargs=dict(distance=h/2)),
             Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
         ],
-        'G': [
-            Stroke(
-                heading=135, path=circle, kwargs=dict(radius=s/2, extent=315),
-                offset=(s/2 * (1 + 1/math.sqrt(2)), (s/2) * (1 + 1/math.sqrt(2))),
-            ),
-            Stroke(heading=180, path=line, kwargs=dict(distance=s/2)),
-        ],
         'M': [
             Stroke(heading=90, offset=(M_shift_x, 0), path=line, kwargs=dict(distance=s)),
             Stroke(heading=-M_heading, path=line, kwargs=dict(distance=M_r/2)),
             Stroke(heading=M_heading, path=line, kwargs=dict(distance=M_r/2)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
         ],
-        'O': [
-            Stroke(heading=0, offset=(s/2, 0), path=circle, kwargs=dict(radius=s/2)),
-        ],
-        'P': [
-            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
-        ],
-        'R': [
-            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=0, path=circle, kwargs=dict(radius=s/4, extent=180, clockwise=True)),
-            Stroke(heading=-0.75 * 90, path=line, kwargs=dict(distance=s/2)),
-        ],
-        'S': [
-            Stroke(heading=-90, offset=(s/4, s/8), path=line, kwargs=dict(distance=s/8)),
-            Stroke(heading=0, path=line, kwargs=dict(distance=s/2)),
-            Stroke(heading=90, path=line, kwargs=dict(distance=s/2)),
-            Stroke(heading=180, path=line, kwargs=dict(distance=s/2)),
-            Stroke(heading=90, path=line, kwargs=dict(distance=s/2)),
+        'T': [
+            Stroke(heading=90, offset=(s/4, 7*s/8), path=line, kwargs=dict(distance=s/8)),
             Stroke(heading=0, path=line, kwargs=dict(distance=s/2)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=s/8)),
-        ],
-        'T': [
-            Stroke(heading=0, offset=(0, s), path=line, kwargs=dict(distance=s)),
             Stroke(heading=-90, offset=(s/2, s), path=line, kwargs=dict(distance=s)),
         ],
-        'U': [
-            Stroke(heading=-90, offset=(s, s), path=ellipse, kwargs=dict(a=s/2, b=s, extent=180, clockwise=True))
-        ],
-
         'V': [
             Stroke(heading=-a, offset=(a_x, s), path=line, kwargs=dict(distance=a_r)),
             Stroke(heading=a, path=line, kwargs=dict(distance=a_r)),
