@@ -9,7 +9,7 @@ from fractions import Fraction
 from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add, new_turtle
 from turtles.config import settings
 from turtles.types import Point
-from turtles.alphabet import character_set
+from turtles.alphabet import character_set, Stroke
 
 
 
@@ -81,18 +81,3 @@ class Path:
 
     def rescale(self, width: float, height: float) -> str:
         return f'Path(start={rescale(self.start, width, height)}, end={rescale(self.end, width, height)})'
-
-
-@dataclass
-class Stroke:
-    # path to follow and its args
-    # path is a string attribute which should be callable on the turtle class
-    path: Callable[..., None]
-    kwargs: dict
-
-    # initial heading
-    heading: Optional[float] = None
-
-    # relative offset from the turtle's starting position
-    # none indicates to resume from whereever it is
-    offset: Optional[Tuple[float, float]] = None
