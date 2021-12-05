@@ -3,8 +3,8 @@ from turtles.news import TurtleNews
 
 turtle_news = TurtleNews()
 turtle_news.publish([
-    'DOSGWVZT',
-#    'ABCEFHIJKLMNUXYZ'
+    'CODSGWVZT',
+#    'ABEFHIJKLMNUXYZ'
 ])
 
 turtle_news.start()
