@@ -1,5 +1,4 @@
 module="turtles/charset"
-rm -f "$module.*"
 
 # rewrite character set
 ./run.sh rewrite 'temp' 
@@ -7,6 +6,9 @@ temp=`cat temp`
 
 # expand template
 gsed -i -r "s/@/$temp/" "$module.template"
+
+# expanded
+cat "$module.template"
 
 # replace module
 mv "$module.template" "$module.py"
