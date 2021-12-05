@@ -127,7 +127,12 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(path=line, kwargs=dict(distance=3*w/4, heading=180)),
         ],
         'E': [
-            Stroke(heading=180, offset=(3*w/4, 0), path=line, kwargs=dict(distance=w/2)),
+            Stroke(offset=(w, 0), path=line, kwargs=dict(heading=-180, distance=w)),
+            Stroke(path=line, kwargs=dict(heading=-90, distance=h/2)),
+            Stroke(path=line, kwargs=dict(heading=0, distance=w)),
+            Stroke(offset=(0, h/2), path=line, kwargs=dict(heading=-90, distance=h/2)),
+            Stroke(path=line, kwargs=dict(heading=0, distance=w)),
+
             Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
             Stroke(heading=0, path=line, kwargs=dict(distance=w/2)),
             Stroke(heading=90, offset=(w/4, h/2), path=line, kwargs=dict(distance=h/2)),
@@ -152,6 +157,11 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(path=line, kwargs=dict(distance=w/2, heading=0)),
             Stroke(path=line_to, kwargs=dict(end=(w, 7*h/8))),
         ],
+        'H': [
+            Stroke(path=line, kwargs=dict(heading=90, distance=h)),
+            Stroke(offset=(0, h/2), path=line, kwargs=dict(heading=0, distance=w)),
+            Stroke(offset=(w, 0), path=line, kwargs=dict(heading=90, distance=h)),
+        ],
         'I': [
             Stroke(offset=(0, h), path=line, kwargs=dict(heading=0, distance=w)),
             Stroke(offset=(w/2, h), path=line, kwargs=dict(heading=-90, distance=h)),
@@ -163,7 +173,6 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(path=line_to, kwargs=dict(end=(3*w/4, 0))),
             Stroke(path=line, kwargs=dict(distance=w/2, heading=180)),
             Stroke(path=line_to, kwargs=dict(end=(0, h/8))),
-
         ],
         'M': [
             Stroke(heading=90, offset=(M_shift_x, 0), path=line, kwargs=dict(distance=s)),
