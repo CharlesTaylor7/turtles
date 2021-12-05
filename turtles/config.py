@@ -9,4 +9,4 @@ class Config:
     override_turtle_speed: Optional[TurtleSpeed] = None
 
 
-settings = Config(override_turtle_speed=9)
+settings = Config()

@@ -44,10 +44,10 @@ class TurtleNewsNetwork:
         if self.turtle:
             self.turtle.reset()
             self.turtle.hideturtle()
-        self.turtle = new_turtle(speed=1, pen_size=3)
+        self.turtle = new_turtle(speed=5, pen_size=3)
 
         # publish
-        editor.scramble(self.turtle, article)
+        editor.publish(self.turtle, article, scramble=True)
 
         # mark available
         self.busy = False
