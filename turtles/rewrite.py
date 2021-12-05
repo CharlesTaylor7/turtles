@@ -12,9 +12,6 @@ from turtles.types import Point
 from turtles.alphabet import character_set, Stroke
 
 
-
-
-
 def rewrite() -> None:
     turtle = new_turtle(speed=0)
     # character width
@@ -33,13 +30,13 @@ def rewrite() -> None:
         turtle.char_position = vector(0, 0)  # type: ignore
 
         def apply_stroke(s: Stroke) -> None:
-            start = turtle.position()
             if s.offset:
                 walk(turtle, s.offset)
 
             if s.heading is not None:
                 turtle.setheading(s.heading)
 
+            start = turtle.position()
             s.path(turtle, **s.kwargs)
             end = turtle.position()
             new[c].append(Path(start=start, end=end).rescale(width=width, height=height))
