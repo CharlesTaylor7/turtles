@@ -1,9 +1,5 @@
-import random
-
-from typing import List, Callable, cast, Optional, Iterable, NoReturn
-from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput, title
-from queue import Queue
-from adt import adt
+from typing import Callable, Optional, Iterable, NoReturn
+from turtle import Turtle, Screen, mainloop, textinput, title
 from tkinter import Event, Canvas
 
 from turtles.utils import new_turtle

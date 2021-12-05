@@ -1,15 +1,12 @@
 import math
 import random
 
-from typing import Optional, Tuple, Literal, Union
+from typing import Optional
 from turtle import Turtle, ontimer, Vec2D
 from typeguard import typechecked
 
 from turtles.config import settings
 from turtles.types import TurtleSpeed, Point
-
-
-__all__ = ['new_turtle', 'copy_turtle']
 
 
 def new_turtle(
@@ -55,7 +52,7 @@ def retreat(turtle: Turtle) -> None:
     turtle.hideturtle()
 
 
-def walk(turtle: Turtle, position: Tuple[float, float]) -> None:
+def walk(turtle: Turtle, position: Point) -> None:
     """
     walk without drawing
     """
@@ -76,6 +73,7 @@ def nudge(turtle: Turtle) -> None:
         ontimer(move, 400)
     move()
 
+
 def set_color(turtle: Turtle, color: str) -> None:
     turtle.pencolor(color)
     turtle.fillcolor(color)
@@ -86,6 +84,7 @@ def dance(turtle: Turtle) -> None:
     interval = 400
     # move to initial position
     turtle.setheading(90 + motion / 2)
+
     def left() -> None:
         set_color(turtle, 'magenta')
         turtle.left(motion)

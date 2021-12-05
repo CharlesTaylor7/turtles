@@ -1,14 +1,8 @@
-import math
-from typing import List, Tuple, Callable, Optional, Dict, Union, Iterable, cast, Generic
+from typing import Iterable
 from turtle import Turtle, Vec2D
-from dataclasses import dataclass, field
-from typeguard import typechecked
-from adt import adt, Case
-from fractions import Fraction
 
-from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add, new_turtle
-from turtles.config import settings
-from turtles.types import Point, Path
+from turtles.utils import retreat, walk, add
+from turtles.types import Path
 from turtles.charset import character_set
 
 
@@ -46,4 +40,3 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                 apply_path(s)
 
     retreat(turtle)
-
