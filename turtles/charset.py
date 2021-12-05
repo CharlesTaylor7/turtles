@@ -42,17 +42,15 @@ def character_set(width: float, height: float) -> Dict[str, List[Path]]:
             Path(start=(3*w/4, 0), end=(0, 0)),
         ],
         'E': [
-            Path(start=(w, 0), end=(0, 0)),
-            Path(start=(0, 0), end=(0, h/2)),
-            Path(start=(0, h/2), end=(w, h/2)),
-            Path(start=(0, h/2), end=(0, h)),
+            Path(start=(0, 0), end=(0, h)),
             Path(start=(0, h), end=(w, h)),
+            Path(start=(0, h/2), end=(3*w/4, h/2)),
+            Path(start=(0, 0), end=(w, 0)),
         ],
         'F': [
-            Path(start=(0, 0), end=(0, h/2)),
-            Path(start=(0, h/2), end=(w, h/2)),
-            Path(start=(0, h/2), end=(0, h)),
+            Path(start=(0, 0), end=(0, h)),
             Path(start=(0, h), end=(w, h)),
+            Path(start=(0, h/2), end=(3*w/4, h/2)),
         ],
         'G': [
             Path(start=(w/2, h/2), end=(w, h/2)),
