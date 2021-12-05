@@ -158,7 +158,6 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=M_heading, path=line, kwargs=dict(distance=M_r/2)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
         ],
-
         'O': [
             Stroke(offset=(0, h/8), path=line, kwargs=dict(heading=90, distance=3*h/4)),
             Stroke(path=line_to, kwargs=dict(end=(w/4, h))),
@@ -187,6 +186,13 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=0, path=line, kwargs=dict(distance=w)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=h/8)),
             Stroke(heading=-90, offset=(w/2, h), path=line, kwargs=dict(distance=h)),
+        ],
+        'U': [
+            Stroke(offset=(w, h), path=line, kwargs=dict(heading=-90, distance=7*h/8)),
+            Stroke(path=line_to, kwargs=dict(end=(3*w/4, 0))),
+            Stroke(path=line, kwargs=dict(distance=w/2, heading=180)),
+            Stroke(path=line_to, kwargs=dict(end=(0, h/8))),
+            Stroke(path=line, kwargs=dict(heading=90, distance=7*h/8)),
         ],
         'V': [
             Stroke(offset=(0, h), path=line_to, kwargs=dict(end=(w/2, 0))),
