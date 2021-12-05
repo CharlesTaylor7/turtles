@@ -1,5 +1,8 @@
 from typing import Literal, Tuple
 from dataclasses import dataclass
+from turtle import Vec2D, Turtle
+
+from turtles import utils
 
 
 Point = Tuple[float, float]
@@ -9,6 +12,15 @@ Point = Tuple[float, float]
 class Path:
     start: Point
     end: Point
+
+    def shift(self, vector: Vec2D) -> 'Path':
+        return Path(vector + self.start, vector + self.end)  # type: ignore
+
+
+    def draw(self, turtle: Turtle) -> None:
+        utils.walk(turtle, self.start)
+        turtle.setheading(turtle.towards(self.end))
+        turtle.goto(self.end)
 
 
 TurtleSpeed = Literal[

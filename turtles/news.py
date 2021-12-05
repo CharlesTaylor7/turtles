@@ -47,7 +47,7 @@ class TurtleNewsNetwork:
         self.turtle = new_turtle(speed=1, pen_size=3)
 
         # publish
-        editor.publish(self.turtle, article)
+        editor.scramble(self.turtle, article)
 
         # mark available
         self.busy = False

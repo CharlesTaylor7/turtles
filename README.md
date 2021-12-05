@@ -5,7 +5,5 @@
 
 
 ## To Do
-- '?' character
-- 'R' fix design
 - randomize strokes
 - make angle turning faster relative to line drawing
