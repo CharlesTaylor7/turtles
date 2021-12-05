@@ -1,7 +1,7 @@
 import math
 import random
 
-from typing import Optional
+from typing import Optional, Callable
 from turtle import Turtle, ontimer, Vec2D
 from typeguard import typechecked
 
@@ -49,7 +49,7 @@ def position(turtle: Turtle, x: float, y: float, heading: Optional[float], telep
 
 def retreat(turtle: Turtle) -> None:
     walk(turtle, (0, 0))
-    turtle.hideturtle()
+    turtle.stop_turtle = dance(turtle)  # type: ignore
 
 
 def walk(turtle: Turtle, position: Point) -> None:
@@ -82,22 +82,33 @@ def set_color(turtle: Turtle, color: str) -> None:
     turtle.fillcolor(color)
 
 
-def dance(turtle: Turtle) -> None:
+def dance(turtle: Turtle) -> Callable[[], None]:
     motion = 30
     interval = 400
     # move to initial position
     turtle.setheading(90 + motion / 2)
+    cease = False
 
     def left() -> None:
+        if cease:
+            return
         set_color(turtle, 'magenta')
         turtle.left(motion)
-        ontimer(right, interval)
+        ontimer(right, interval)  # type: ignore
 
     def right() -> None:
+        if cease:
+            return
         set_color(turtle, 'cyan')
         turtle.right(motion)
         ontimer(left, interval)
+
+    def stop() -> None:
+        nonlocal cease
+        cease = True
+
     right()
+    return stop
 
 
 def to_radians(degrees: float) -> float:
