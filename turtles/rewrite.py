@@ -61,10 +61,10 @@ def rescale_1d(x: float, s: float, char: str) -> str:
     sign = '-' if d < 0 else ''
     d = abs(d)
 
-    if d > 8.001:
+    if d > 20.001:
         return '0'
 
-    d, n = Fraction(d).limit_denominator(8).as_integer_ratio()
+    d, n = Fraction(d).limit_denominator(20).as_integer_ratio()
     n_s = f'{n}*' if n != 1 else ''
     d_s = f'/{d}' if d != 1 else ''
     return f'{sign}{n_s}{char}{d_s}'
