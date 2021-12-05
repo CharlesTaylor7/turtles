@@ -1,7 +1,10 @@
-from turtle.types import Path
+from typing import List, Dict
+from typing import List
+
+from turtles.types import Path
 
 
 def character_set(width: float, height: float) -> Dict[str, List[Path]]:
     w = width
     h = height
-    return $1
+    return @

@@ -8,7 +8,7 @@ from fractions import Fraction
 
 from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add, new_turtle
 from turtles.config import settings
-from turtles.types import Point
+from turtles.types import Point, Path
 from turtles.charset import character_set
 
 
