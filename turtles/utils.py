@@ -167,7 +167,7 @@ class DancingTurtle(Turtle):
                 return
             set_color(self, 'magenta')
             self.left(motion)
-            ontimer(right, interval)  # type: ignore
+            ontimer(right, interval)
 
         def right() -> None:
             if not self.dancing:
