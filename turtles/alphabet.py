@@ -53,16 +53,21 @@ def rewrite() -> None:
         file.write(str(new))
 
 
+def rescale(point: Point, width: float, height: height) -> str:
+    (x, y) = point
+    width / x = d_x
+    height / y = d_y
+
+    return f'(w/{d_x}, h/{d_y})'
+
+
 @dataclass
 class Path:
     start: Point
     end: Point
 
-
-@dataclass
-class Char:
-    name: str
-    path: Path
+    def rescale(self, width: float, height: float) -> str:
+        return f'Path(start={rescale(self.start, width, height)}, end={rescale(self.end, width, height)})'
 
 
 @dataclass
