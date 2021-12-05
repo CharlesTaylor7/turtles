@@ -12,7 +12,7 @@ from turtles.types import Point
 from turtles.alphabet import character_set, Stroke
 
 
-def rewrite() -> None:
+def rewrite(filename: str) -> None:
     turtle = new_turtle(speed=0)
     # character width
     width = 50
@@ -44,7 +44,7 @@ def rewrite() -> None:
         for s in strokes:
             apply_stroke(s)
 
-    with open('new_char_set.py', 'a') as file:
+    with open(filename, 'w') as file:
         file.write(str(new))
 
 

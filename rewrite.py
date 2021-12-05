@@ -1,2 +1,6 @@
+import sys
+
 from turtles.rewrite import rewrite
-rewrite()
+
+
+rewrite(sys.argv[1])
