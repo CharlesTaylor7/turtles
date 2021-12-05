@@ -9,4 +9,4 @@ class Config:
     draw_debug_box: bool = False
 
 
-settings = Config()
+settings = Config(turtle_speed=0)

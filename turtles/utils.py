@@ -3,9 +3,10 @@ import random
 
 from typing import Optional, Tuple, Literal, Union
 from turtle import Turtle, ontimer, Vec2D
+from typeguard import typechecked
 
 from turtles.config import settings
-from turtles.types import TurtleSpeed
+from turtles.types import TurtleSpeed, Point
 
 
 __all__ = ['new_turtle', 'copy_turtle']
@@ -105,7 +106,13 @@ def to_radians(degrees: float) -> float:
     return math.pi * degrees / 180
 
 
-def line(turtle: Turtle, *, distance: float) -> None:
+def line_to(turtle: Turtle, end: Point) -> None:
+    (e_x, e_y) = end
+    (x, y) = turtle.char_position  # type: ignore
+    turtle.goto(e_x + x, e_y + y)
+
+
+def line(turtle: Turtle, distance: float) -> None:
     turtle.forward(distance)
 
 
@@ -156,3 +163,9 @@ def rotate(v: Vec2D, theta: float) -> Vec2D:
 def vector(x: float, y: float) -> Vec2D:
     # mypy does not believe Vec2D is a callable constructor
     return Vec2D(x, y)  # type: ignore[operator]
+
+
+@typechecked
+def add(a: Vec2D, b: Vec2D) -> Vec2D:
+    # Vec2D has an overriden + operator which performs vector addition
+    return a + b  # type: ignore[return-value]

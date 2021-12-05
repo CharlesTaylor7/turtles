@@ -1,4 +1,7 @@
-from typing import Literal
+from typing import Literal, Tuple
+
+
+Point = Tuple[int, int]
 
 
 TurtleSpeed = Literal[

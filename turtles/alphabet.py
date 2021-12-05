@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
 
-from turtles.utils import retreat, walk, ellipse, to_radians, line, circle, vector
+from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add
 from turtles.config import settings
 
 
@@ -16,10 +16,11 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     # character width
     width = 50
     # space between characters
-    margin = 10
+    margin = 25
     height = 100
     characters = character_set(width=float(width), height=float(height))
-    shift = width + margin
+    shift_x = width + margin
+    shift_y = height + margin
     # (x, y) = (-600, 300)
     (x, y) = (-200, 100)
     for (j, phrase) in enumerate(lines):
@@ -31,10 +32,11 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                 continue
 
             # walk to next character
-            walk(turtle, (x + i * shift, y - j * shift))
+            walk(turtle, (x + i * shift_x, y - j * shift_y))
 
             # turtles initial position for this character
             p: Vec2D = turtle.position()
+            turtle.char_position = p  # type: ignore
 
             def apply_stroke(s: Stroke) -> None:
                 if s.offset:
@@ -55,12 +57,6 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                 apply_stroke(s)
 
     retreat(turtle)
-
-
-@typechecked
-def add(a: Vec2D, b: Vec2D) -> Vec2D:
-    # Vec2D has an overriden + operator which performs vector addition
-    return a + b  # type: ignore[return-value]
 
 
 @dataclass
@@ -133,11 +129,20 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=M_heading, path=line, kwargs=dict(distance=M_r/2)),
             Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
         ],
+        'S': [
+            Stroke(heading=-90, offset=(0, h/8), path=line, kwargs=dict(distance=h/8)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=180, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=h/2)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=-90, path=line, kwargs=dict(distance=h/8)),
+        ],
         'T': [
-            Stroke(heading=90, offset=(s/4, 7*s/8), path=line, kwargs=dict(distance=s/8)),
-            Stroke(heading=0, path=line, kwargs=dict(distance=s/2)),
-            Stroke(heading=-90, path=line, kwargs=dict(distance=s/8)),
-            Stroke(heading=-90, offset=(s/2, s), path=line, kwargs=dict(distance=s)),
+            Stroke(heading=90, offset=(0, 7*h/8), path=line, kwargs=dict(distance=h/8)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=-90, path=line, kwargs=dict(distance=h/8)),
+            Stroke(heading=-90, offset=(w/2, h), path=line, kwargs=dict(distance=h)),
         ],
         'V': [
             Stroke(heading=-a, offset=(a_x, s), path=line, kwargs=dict(distance=a_r)),
@@ -149,17 +154,23 @@ def character_set(width: float, height: float) -> Dict[str, List[Stroke]]:
             Stroke(heading=-W_heading, path=line, kwargs=dict(distance=W_r)),
             Stroke(heading=W_heading, path=line, kwargs=dict(distance=W_r)),
         ],
+        'Z': [
+            Stroke(heading=0, offset=(0, h), path=line, kwargs=dict(distance=w)),
+            Stroke(heading=-120, path=line_to, kwargs=dict(end=(0,0))),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=0, offset=(w/4, h/2), path=line, kwargs=dict(distance=w/2)),
+        ],
         ' ': [],
         '!': [
-            Stroke(heading=-90, offset=(s/2, s), path=line, kwargs=dict(distance=8*s/10)),
-            Stroke(heading=90, offset=(s/2, 0), path=line, kwargs=dict(distance=s/20)),
+            Stroke(heading=-90, offset=(w/2, h), path=line, kwargs=dict(distance=8*h/10)),
+            Stroke(heading=90, offset=(w/2, 0), path=line, kwargs=dict(distance=h/20)),
         ],
         '?': [
         ],
         'DEBUG': [
-            Stroke(heading=90, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=0, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=-90, path=line, kwargs=dict(distance=s)),
-            Stroke(heading=180, path=line, kwargs=dict(distance=s)),
+            Stroke(heading=90, path=line, kwargs=dict(distance=h)),
+            Stroke(heading=0, path=line, kwargs=dict(distance=w)),
+            Stroke(heading=-90, path=line, kwargs=dict(distance=h)),
+            Stroke(heading=180, path=line, kwargs=dict(distance=w)),
         ],
     }
