@@ -4,58 +4,65 @@ from turtle import Turtle, Vec2D
 from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
+from collections import defaultdict
 
-from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add
+from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add, new_turtle
 from turtles.config import settings
+from turtles.types import Point
 
 
 __all__ = ['write']
 
 
-def write(turtle: Turtle, lines: Iterable[str]) -> None:
+def write(_turtle: Turtle, _article: Iterable[str]) -> None:
+    pass
+
+
+def rewrite() -> None:
+    turtle = new_turtle(speed=0)
     # character width
     width = 50
     # space between characters
     margin = 25
     height = 100
     characters = character_set(width=float(width), height=float(height))
-    shift_x = width + margin
-    shift_y = height + margin
-    # (x, y) = (-600, 300)
-    (x, y) = (-700, 300)
-    for (j, phrase) in enumerate(lines):
-        for (i, c) in enumerate(phrase):
-            print(f'drawing \'{c}\'')
-            strokes = characters.get(c)
-            if strokes is None:
-                print(f'skipping undefined \'{c}\'')
-                continue
+    new: Dict[str, List[Path]] = defaultdict(list)
+    for c, strokes in characters.items():
+        # reset turtle  position 
+        walk(turtle, (0, 0))
 
-            # walk to next character
-            walk(turtle, (x + i * shift_x, y - j * shift_y))
+        # turtles initial position for this character
+        turtle.char_position = vector(0, 0)  # type: ignore
 
-            # turtles initial position for this character
-            p: Vec2D = turtle.position()
-            turtle.char_position = p  # type: ignore
+        def apply_stroke(s: Stroke) -> None:
+            start = turtle.position()
+            if s.offset:
+                walk(turtle, s.offset)
 
-            def apply_stroke(s: Stroke) -> None:
-                if s.offset:
-                    (x, y) = s.offset
-                    walk(turtle, add(p, vector(x, y)))
+            if s.heading is not None:
+                turtle.setheading(s.heading)
 
-                if s.heading is not None:
-                    turtle.setheading(s.heading)
+            s.path(turtle, **s.kwargs)
+            end = turtle.position()
+            new[c].append(Path(start=start, end=end))
 
-                s.path(turtle, **s.kwargs)
+        for s in strokes:
+            apply_stroke(s)
 
-            if settings.draw_debug_box:
-                for s in characters['DEBUG']:
-                    apply_stroke(s)
+    with open('new_char_set.py', 'w') as file:
+        file.write(str(new))
 
-            for s in strokes:
-                apply_stroke(s)
 
-    retreat(turtle)
+@dataclass
+class Path:
+    start: Point
+    end: Point
+
+
+@dataclass
+class Char:
+    name: str
+    path: Path
 
 
 @dataclass

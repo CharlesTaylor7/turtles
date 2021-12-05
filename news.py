@@ -1,5 +1,3 @@
-from turtles.news import TurtleNews
+from turtles.alphabet import rewrite
 
-
-turtle_news = TurtleNews()
-turtle_news.start()
+rewrite()

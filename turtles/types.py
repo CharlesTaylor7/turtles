@@ -1,7 +1,7 @@
 from typing import Literal, Tuple
 
 
-Point = Tuple[int, int]
+Point = Tuple[float, float]
 
 
 TurtleSpeed = Literal[
