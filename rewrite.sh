@@ -6,7 +6,7 @@ temp=`cat temp`
 echo $temp
 
 # expand template
-gsed -i -r "s/@/$temp/" "$module.template"
+gsed -i -r "s/@/$temp/g" "$module.template"
 echo "$module.template"
 
 # expanded
