@@ -8,6 +8,17 @@ from typeguard import typechecked
 from turtles.config import settings
 from turtles.types import TurtleSpeed, Point
 
+def debug_setheading(turtle: Turtle) -> None:
+    original = turtle.setheading
+    def wrapped(heading: float) -> None:
+        current = turtle.heading()
+        new = turtle.towards(end)
+        print(f'rotating from {current=} to {new=}')
+        # call the untraced method
+        original(heading)
+
+    turtle.setheading = wrapped
+
 
 def new_turtle(
     color: str = 'green',
@@ -20,6 +31,7 @@ def new_turtle(
     teleport: bool = False,
 ) -> Turtle:
     t = Turtle(shape='turtle')
+    debug_setheading(t)
     t.fillcolor(color)
     t.pencolor(color)
     t.pensize(pen_size)

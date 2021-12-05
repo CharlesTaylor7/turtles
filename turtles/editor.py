@@ -1,7 +1,7 @@
 from typing import Iterable
 from turtle import Turtle, Vec2D
 
-from turtles.utils import retreat, walk, add
+from turtles.utils import retreat, walk, add, vector
 from turtles.types import Path
 from turtles.charset import character_set
 
@@ -23,11 +23,8 @@ def publish(turtle: Turtle, lines: Iterable[str]) -> None:
             if paths is None:
                 raise Exception(f'skipping undefined \'{c}\'')
 
-            # walk to next character
-            walk(turtle, (x + i * shift_x, y - j * shift_y))
-
-            # turtles initial position for this character
-            p: Vec2D = turtle.position()
+            # turtles origin for next character
+            p = vector(x + i * shift_x, y - j * shift_y)
 
             def apply_path(s: Path) -> None:
                 start = add(p, s.start)
