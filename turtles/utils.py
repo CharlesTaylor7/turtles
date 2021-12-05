@@ -49,7 +49,7 @@ def position(turtle: Turtle, x: float, y: float, heading: Optional[float], telep
 
 def retreat(turtle: Turtle) -> None:
     walk(turtle, (0, 0))
-    turtle.stop_turtle = dance(turtle)  # type: ignore
+    turtle.stop_dance = dance(turtle)  # type: ignore
 
 
 def walk(turtle: Turtle, position: Point) -> None:
