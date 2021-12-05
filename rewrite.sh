@@ -3,9 +3,11 @@ module="turtles/charset"
 # rewrite character set
 ./run.sh rewrite 'temp' 
 temp=`cat temp`
+echo $temp
 
 # expand template
 gsed -i -r "s/@/$temp/" "$module.template"
+echo "$module.template"
 
 # expanded
 cat "$module.template"
