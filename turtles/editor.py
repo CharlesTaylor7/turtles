@@ -6,7 +6,7 @@ from turtles.types import Path
 from turtles.charset import character_set
 
 
-def write(turtle: Turtle, lines: Iterable[str]) -> None:
+def publish(turtle: Turtle, lines: Iterable[str]) -> None:
     # character width
     width = 50
     # space between characters

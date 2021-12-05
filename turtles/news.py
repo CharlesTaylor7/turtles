@@ -3,7 +3,7 @@ from turtle import Turtle, Screen, mainloop, textinput, title
 from tkinter import Event, Canvas
 
 from turtles.utils import new_turtle
-from turtles import alphabet
+from turtles import editor 
 
 
 class MouseEvent:
@@ -11,7 +11,7 @@ class MouseEvent:
     y: float
 
 
-class TurtleNews:
+class TurtleNewsNetwork:
     def __init__(self) -> None:
         self.turtle: Optional[Turtle] = None
         self.busy = False
@@ -46,8 +46,8 @@ class TurtleNews:
             self.turtle.hideturtle()
         self.turtle = new_turtle(speed=1, pen_size=3)
 
-        # write the phrase
-        alphabet.write(self.turtle, article)
+        # publish
+        editor.publish(self.turtle, article)
 
         # mark available
         self.busy = False

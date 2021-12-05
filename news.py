@@ -1,3 +1,3 @@
-from turtles.news import TurtleNews
+from turtles.news import TurtleNewsNetwork
 
-TurtleNews().start()
+TurtleNewsNetwork().start()
