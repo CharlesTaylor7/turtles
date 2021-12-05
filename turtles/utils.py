@@ -12,37 +12,25 @@ __all__ = ['new_turtle', 'copy_turtle']
 
 
 def new_turtle(
-    color: str,
-    size: int,
+    color: str = 'green',
+    pen_size: int = 1,
+    turtle_size: int = 1,
     x: float = 0,
     y: float = 0,
     heading: Optional[float] = None,
     speed: TurtleSpeed = settings.turtle_speed,
     teleport: bool = False,
 ) -> Turtle:
-    print(f'Turtle {x=}, {y=}, {color=}, {size=}, {speed=}, {teleport=}')
+    print(f'Turtle {x=}, {y=}, {color=}, {pen_size=}, {turtle_size=}, {speed=}, {teleport=}')
     t = Turtle(shape='turtle')
     t.setundobuffer(None)
     t.fillcolor(color)
     t.pencolor(color)
-    t.turtlesize(size)
-    t.pensize(size)
+    t.pensize(pen_size)
+    t.turtlesize(turtle_size)
     t.speed(speed)
     position(t, x, y, heading, teleport=teleport)
     return t
-
-
-def copy_turtle(turtle: Turtle) -> Turtle:
-    (x, y) = turtle.position()
-    return new_turtle(
-        x=x,
-        y=y,
-        color=turtle.fillcolor(),
-        size=turtle.pensize(),
-        heading=turtle.heading(),
-        speed=turtle.speed(),  # type: ignore[arg-type]
-        teleport=True,
-    )
 
 
 def position(turtle: Turtle, x: float, y: float, heading: Optional[float], teleport: bool) -> None:
