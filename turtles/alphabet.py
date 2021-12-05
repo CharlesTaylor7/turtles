@@ -22,7 +22,7 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
     shift_x = width + margin
     shift_y = height + margin
     # (x, y) = (-600, 300)
-    (x, y) = (-200, 100)
+    (x, y) = (-100)
     for (j, phrase) in enumerate(lines):
         for (i, c) in enumerate(phrase):
             print(f'drawing \'{c}\'')
