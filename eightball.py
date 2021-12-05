@@ -2,7 +2,7 @@ import random
 
 from typing import Optional, Iterable, Any, Callable
 from turtles.editor import publish
-from turtles.utils import dance
+from turtles.utils import new_turtle, DancingTurtle
 
 from turtle import mainloop, Turtle, Screen, textinput
 
@@ -48,8 +48,8 @@ def on_click(screen: Any, turtle: Turtle) -> None:
 screen = Screen()
 screen.setup(width=1.0, height=1.0)
 screen.title('Click to speak to the wise turtle')
-wise_turtle = Turtle('turtle')
+wise_turtle = new_turtle(DancingTurtle)
 reset(wise_turtle)
-dance(wise_turtle)
+wise_turtle.dance()
 on_click(screen, wise_turtle)
 mainloop()

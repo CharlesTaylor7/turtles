@@ -1,15 +1,50 @@
 import math
 import random
 
-from typing import Optional, Callable
-from turtle import Turtle, ontimer, Vec2D
+from typing import Optional, Callable, TypeVar, Type, overload, Any
+from turtle import Turtle, RawTurtle, ontimer, Vec2D
 from typeguard import typechecked
 
 from turtles.config import settings
 from turtles.types import TurtleSpeed, Point
 
 
+class DancingTurtle(Turtle):
+    def __init__(self, *args: Any, **kwargs: Any):
+        super().__init__(*args, **kwargs)
+        self.dancing = False
+
+    def stop(self) -> None:
+        self.dancing = False
+
+    def dance(self) -> None:
+        self.dancing = True
+        motion = 30
+        interval = 400
+        # move to initial position
+        self.setheading(90 + motion / 2)
+
+        def left() -> None:
+            if not self.dancing:
+                return
+            set_color(self, 'magenta')
+            self.left(motion)
+            ontimer(right, interval)  # type: ignore
+
+        def right() -> None:
+            if not self.dancing:
+                return
+            set_color(self, 'cyan')
+            self.right(motion)
+            ontimer(left, interval)
+
+        right()
+
+
+T = TypeVar('T', bound=RawTurtle)
+
 def new_turtle(
+    turtle_class: Type[T],
     color: str = 'green',
     pen_size: int = 1,
     turtle_size: int = 1,
@@ -18,8 +53,8 @@ def new_turtle(
     heading: Optional[float] = None,
     speed: TurtleSpeed = 'normal',
     teleport: bool = False,
-) -> Turtle:
-    t = Turtle(shape='turtle')
+) -> T:
+    t = turtle_class(shape='turtle')
     t.fillcolor(color)
     t.pencolor(color)
     t.pensize(pen_size)
@@ -29,7 +64,7 @@ def new_turtle(
     return t
 
 
-def position(turtle: Turtle, x: float, y: float, heading: Optional[float], teleport: bool) -> None:
+def position(turtle: RawTurtle, x: float, y: float, heading: Optional[float], teleport: bool) -> None:
     if teleport:
         current_speed = turtle.speed()
         turtle.speed(0)
@@ -47,12 +82,15 @@ def position(turtle: Turtle, x: float, y: float, heading: Optional[float], telep
         turtle.setheading(heading)
 
 
-def retreat(turtle: Turtle) -> None:
+def retreat(turtle: RawTurtle) -> None:
     walk(turtle, (0, 0))
-    turtle.stop_dance = dance(turtle)  # type: ignore
+    if isinstance(turtle, DancingTurtle):
+        turtle.dance()
+    else:
+        turtle.hideturtle()
 
 
-def walk(turtle: Turtle, position: Point) -> None:
+def walk(turtle: RawTurtle, position: Point) -> None:
     """
     walk without drawing
     """
@@ -66,62 +104,33 @@ def walk(turtle: Turtle, position: Point) -> None:
     turtle.pendown()
 
 
-def spin(turtle: Turtle) -> None:
+def spin(turtle: RawTurtle) -> None:
     turtle.left(random.randint(1, 360))
 
 
-def nudge(turtle: Turtle) -> None:
+def nudge(turtle: RawTurtle) -> None:
     def move() -> None:
         turtle.forward(10)
         ontimer(move, 400)
     move()
 
 
-def set_color(turtle: Turtle, color: str) -> None:
+def set_color(turtle: RawTurtle, color: str) -> None:
     turtle.pencolor(color)
     turtle.fillcolor(color)
-
-
-def dance(turtle: Turtle) -> Callable[[], None]:
-    motion = 30
-    interval = 400
-    # move to initial position
-    turtle.setheading(90 + motion / 2)
-    cease = False
-
-    def left() -> None:
-        if cease:
-            return
-        set_color(turtle, 'magenta')
-        turtle.left(motion)
-        ontimer(right, interval)  # type: ignore
-
-    def right() -> None:
-        if cease:
-            return
-        set_color(turtle, 'cyan')
-        turtle.right(motion)
-        ontimer(left, interval)
-
-    def stop() -> None:
-        nonlocal cease
-        cease = True
-
-    right()
-    return stop
 
 
 def to_radians(degrees: float) -> float:
     return math.pi * degrees / 180
 
 
-def circle(turtle: Turtle, *, radius: float, extent: float, clockwise: bool) -> None:
+def circle(turtle: RawTurtle, *, radius: float, extent: float, clockwise: bool) -> None:
     if clockwise:
         radius = -radius
     turtle.circle(radius, extent)
 
 
-def ellipse(turtle: Turtle, *, a: float, b: float, extent: float = 360, clockwise: bool = False) -> None:
+def ellipse(turtle: RawTurtle, *, a: float, b: float, extent: float = 360, clockwise: bool = False) -> None:
     """
     https://stackoverflow.com/a/61985797
     TODO: make this start the ellipse tangent to the turtles current heading
