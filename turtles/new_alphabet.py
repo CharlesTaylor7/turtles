@@ -36,7 +36,7 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
             # turtles initial position for this character
             p: Vec2D = turtle.position()
 
-            def apply_path(s: Path) -> None: 
+            def apply_path(s: Path) -> None:
                 start = add(p, s.start)
                 end = add(p, s.end)
                 walk(turtle, start)
