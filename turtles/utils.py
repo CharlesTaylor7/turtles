@@ -25,6 +25,7 @@ def new_turtle(
     t.setundobuffer(None)
     t.fillcolor(color)
     t.pencolor(color)
+    t.turtlesize(size)
     t.pensize(size)
     t.speed(speed)
     position(t, x, y, heading, teleport=teleport)
@@ -65,9 +66,7 @@ def position(turtle: Turtle, x: float, y: float, heading: Optional[float], telep
 
 def retreat(turtle: Turtle) -> None:
     walk(turtle, (0, 0))
-    turtle.setheading(90)
-    dance(turtle)
-    # turtle.hideturtle()
+    turtle.hideturtle()
 
 
 def walk(turtle: Turtle, position: Tuple[float, float]) -> None:
@@ -92,16 +91,26 @@ def nudge(turtle: Turtle) -> None:
         ontimer(move, 400)
     move()
 
+def set_color(turtle: Turtle, color: str) -> None:
+    turtle.pencolor(color)
+    turtle.fillcolor(color)
+
 
 def dance(turtle: Turtle) -> None:
+    motion = 30
+    interval = 400
+    # move to initial position
+    turtle.setheading(90 + motion / 2)
     def left() -> None:
-        turtle.left(30)
-        ontimer(right, 400)
+        set_color(turtle, 'magenta')
+        turtle.left(motion)
+        ontimer(right, interval)
 
     def right() -> None:
-        turtle.right(30)
-        ontimer(left, 400)
-    left()
+        set_color(turtle, 'cyan')
+        turtle.right(motion)
+        ontimer(left, interval)
+    right()
 
 
 def to_radians(degrees: float) -> float:

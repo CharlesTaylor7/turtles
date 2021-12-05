@@ -1,8 +1,8 @@
-from turtles.chase import TurtleChase
+from turtles.news import TurtleNews
 
 
-turtle_chase = TurtleChase()
-turtle_chase.draw([
+turtle_news = TurtleNews()
+turtle_news.publish([
     'S',
 #    'WAVMN',
 #    'PBR',
@@ -12,4 +12,4 @@ turtle_chase.draw([
 #    'OGQJSU',
 ])
 
-turtle_chase.start()
+turtle_news.start()
