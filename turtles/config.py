@@ -1,3 +1,4 @@
+from typing import Optional
 from dataclasses import dataclass
 
 from turtles.types import TurtleSpeed
@@ -5,8 +6,8 @@ from turtles.types import TurtleSpeed
 
 @dataclass
 class Config:
-    turtle_speed: TurtleSpeed = 'normal'
+    override_turtle_speed: Optional[TurtleSpeed] = None
     draw_debug_box: bool = False
 
 
-settings = Config(turtle_speed=0)
+settings = Config(override_turtle_speed=0)

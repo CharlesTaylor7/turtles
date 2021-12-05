@@ -19,7 +19,7 @@ class TurtleNewsNetwork:
 
     def start(self) -> NoReturn:  # type: ignore[misc]
         title('Turtle News Network')
-        self.screen.bgcolor('Grey')
+        self.screen.bgcolor('#fafffa')
         self.screen.setup(width=1.0, height=1.0, startx=None, starty=None)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)

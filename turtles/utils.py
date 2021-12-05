@@ -16,7 +16,7 @@ def new_turtle(
     x: float = 0,
     y: float = 0,
     heading: Optional[float] = None,
-    speed: TurtleSpeed = settings.turtle_speed,
+    speed: TurtleSpeed = 'normal',
     teleport: bool = False,
 ) -> Turtle:
     t = Turtle(shape='turtle')
@@ -24,7 +24,7 @@ def new_turtle(
     t.pencolor(color)
     t.pensize(pen_size)
     t.turtlesize(turtle_size)
-    t.speed(speed)
+    t.speed(speed if settings.override_turtle_speed is None else settings.override_turtle_speed)
     position(t, x, y, heading, teleport=teleport)
     return t
 
