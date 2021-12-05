@@ -1,7 +1,7 @@
 import random
 
 from typing import List, Callable, cast, Optional, Iterable, NoReturn
-from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput
+from turtle import Turtle, Screen, mainloop, register_shape, shape, ontimer, textinput, title
 from queue import Queue
 from adt import adt
 from tkinter import Event, Canvas
@@ -17,12 +17,15 @@ class MouseEvent:
 
 class TurtleNews:
     def __init__(self) -> None:
-        self.turtle: Optional[Turtle] = None
+        self.turtle = new_turtle(pen_size=3)
+        self.turtle_undos = self.turtle.undobufferentries()
         self.busy = False
         self.screen = Screen()
-        self.screen.bgcolor('black')
 
     def start(self) -> NoReturn:  # type: ignore[misc]
+        title('Turtle News Network')
+        self.screen.bgcolor('black')
+        self.screen.setup(width=1.0, height=1.0, startx=None, starty=None)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()
@@ -33,17 +36,18 @@ class TurtleNews:
             return
 
         # ask for input
-        phrase: Optional[str] = textinput('???', '?')
+        phrase: Optional[str] = textinput('TNN - Breaking News!', 'Headline:')
 
         if phrase:
-            self.publish(phrase.split('\n'))
+            self.publish(phrase.upper().split('\\'))
 
     def publish(self, article: Iterable[str]) -> None:
         # mark busy
         self.busy = True
 
-        # summon a turtle
-        self.turtle = new_turtle(pen_size=3)
+        # turtle undo
+        while self.turtle.undobufferentries() - self.turtle_undos:
+            self.turtle.undo()
 
         # write the phrase
         alphabet.write(self.turtle, article)

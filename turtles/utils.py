@@ -23,7 +23,6 @@ def new_turtle(
     teleport: bool = False,
 ) -> Turtle:
     t = Turtle(shape='turtle')
-    t.setundobuffer(None)
     t.fillcolor(color)
     t.pencolor(color)
     t.pensize(pen_size)
