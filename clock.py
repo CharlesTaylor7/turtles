@@ -1,6 +1,6 @@
 from datetime import datetime
 from dataclasses import dataclass
-from turtle import Turtle, getscreen, ontimer, mainloop
+from turtle import Turtle, getscreen, ontimer, mainloop, title
 
 
 # init
@@ -57,6 +57,7 @@ def redraw_minute_hand(hand: TurtleHand, seconds: int) -> None:
 
 
 def clock() -> None:
+    title('Clock')
     # get current time
     time = datetime.now()
     s = time.second
@@ -94,7 +95,6 @@ def clock() -> None:
 
     def tick() -> None:
         nonlocal seconds
-        seconds += 1
         if seconds % 3600 == 0:
             redraw_hour_hand(t_h, seconds)
 
@@ -102,6 +102,7 @@ def clock() -> None:
             redraw_minute_hand(t_m, seconds)
 
         t_s.right(6)
+        seconds += 1
         ontimer(tick, 100)
     tick()
 
