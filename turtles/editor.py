@@ -1,5 +1,5 @@
 from typing import Iterable
-from turtle import Turtle, Vec2D
+from turtle import Turtle
 
 from turtles.utils import retreat, walk, add, vector
 from turtles.types import Path

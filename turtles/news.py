@@ -3,7 +3,7 @@ from turtle import Turtle, Screen, mainloop, textinput, title
 from tkinter import Event, Canvas
 
 from turtles.utils import new_turtle
-from turtles import editor 
+from turtles import editor
 
 
 class MouseEvent:
