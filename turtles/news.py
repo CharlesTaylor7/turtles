@@ -56,7 +56,6 @@ class TurtleNews:
             return
         turtle = self.turtle
         angle = turtle.towards(x, y)
-        print(f'{angle=}')
         turtle.left(angle)
 
     # causes program to crash if to many commands are issued at once

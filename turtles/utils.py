@@ -22,7 +22,6 @@ def new_turtle(
     speed: TurtleSpeed = settings.turtle_speed,
     teleport: bool = False,
 ) -> Turtle:
-    print(f'Turtle {x=}, {y=}, {color=}, {pen_size=}, {turtle_size=}, {speed=}, {teleport=}')
     t = Turtle(shape='turtle')
     t.setundobuffer(None)
     t.fillcolor(color)
@@ -39,7 +38,6 @@ def position(turtle: Turtle, x: float, y: float, heading: Optional[float], telep
         current_speed = turtle.speed()
         turtle.speed(0)
     else:
-        print(f'walking to {(x, y)}')
         turtle.setheading(turtle.towards(x, y))
 
     turtle.penup()
@@ -62,7 +60,6 @@ def walk(turtle: Turtle, position: Tuple[float, float]) -> None:
     """
     walk without drawing
     """
-    print(f'walking to {position}')
     (x, y) = position
     turtle.penup()
     turtle.setheading(turtle.towards(x, y))
@@ -134,7 +131,6 @@ def ellipse(turtle: Turtle, *, a: float, b: float, extent: float = 360, clockwis
     turtle.speed('fastest')
     theta = to_radians(turtle.heading() - 90)
 
-    print(f'drawing ellipse {a=}, {b=}, {extent=}, {clockwise=}')
     sign = -1 if clockwise else 1
 
     d = 10

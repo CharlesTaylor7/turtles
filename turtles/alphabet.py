@@ -44,10 +44,8 @@ def write(turtle: Turtle, lines: Iterable[str]) -> None:
                     walk(turtle, add(p, vector(x, y)))
 
                 if s.heading is not None:
-                    print(f'heading at {s.heading}')
                     turtle.setheading(s.heading)
 
-                print(f'taking path {s.path.__name__} {s.kwargs}')
                 s.path(turtle, **s.kwargs)
 
             if settings.draw_debug_box:
