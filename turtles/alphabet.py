@@ -4,7 +4,7 @@ from turtle import Turtle, Vec2D
 from dataclasses import dataclass, field
 from typeguard import typechecked
 from adt import adt, Case
-from collections import defaultdict
+from fractions import Fraction
 
 from turtles.utils import retreat, walk, to_radians, line, vector, line_to, add, new_turtle
 from turtles.config import settings
@@ -26,8 +26,9 @@ def rewrite() -> None:
     margin = 25
     height = 100
     characters = character_set(width=float(width), height=float(height))
-    new: Dict[str, List[Path]] = defaultdict(list)
+    new: Dict[str, List[str]] = dict()
     for c, strokes in characters.items():
+        new[c] = list()
         # reset turtle  position 
         walk(turtle, (0, 0))
 
@@ -44,7 +45,7 @@ def rewrite() -> None:
 
             s.path(turtle, **s.kwargs)
             end = turtle.position()
-            new[c].append(Path(start=start, end=end))
+            new[c].append(Path(start=start, end=end).rescale(width=width, height=height))
 
         for s in strokes:
             apply_stroke(s)
@@ -53,12 +54,27 @@ def rewrite() -> None:
         file.write(str(new))
 
 
-def rescale(point: Point, width: float, height: height) -> str:
-    (x, y) = point
-    width / x = d_x
-    height / y = d_y
+def rescale(point: Point, width: float, height: float) -> str:
+    x = rescale_1d(point[0], width, 'w')
+    y = rescale_1d(point[1], height, 'h')
+    return f'({x}, {y})'
 
-    return f'(w/{d_x}, h/{d_y})'
+
+def rescale_1d(x: float, s: float, char: str) -> str:
+    if x == 0:
+        return '0'
+    d = s / x
+    sign = '-' if d < 0 else ''
+    d = abs(d)
+
+    if d > 8.001:
+        return '0'
+
+    d, n = Fraction(d).limit_denominator(8).as_integer_ratio()
+    n_s = f'{n}*' if n != 1 else ''
+    d_s = f'/{d}' if d != 1 else ''
+    return f'{sign}{n_s}{char}{d_s}'
+
 
 
 @dataclass
