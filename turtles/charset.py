@@ -135,7 +135,7 @@ def character_set(width: float, height: float) -> Dict[str, List[Path]]:
             Path(start=(w, 7*h/8), end=(w, 5*h/8)),
             Path(start=(w, 5*h/8), end=(3*w/4, h/2)),
             Path(start=(3*w/4, h/2), end=(0, h/2)),
-            Path(start=(0, h/2), end=(w, 0)),
+            Path(start=(3*w/4, h/2), end=(w, 0)),
         ],
         'S': [
             Path(start=(0, h/8), end=(w/4, 0)),
@@ -185,7 +185,7 @@ def character_set(width: float, height: float) -> Dict[str, List[Path]]:
         ' ': [],
         '!': [
             Path(start=(w/2, h), end=(w/2, 3*h/8)),
-            Path(end=(w/2, 0), start=(w/2, h/8)),
+            Path(start=(w/2, h/8), end=(w/2, 0)),
         ],
         '?': [
             Path(start=(0, 7*h/8), end=(w/4, h)),
@@ -194,15 +194,7 @@ def character_set(width: float, height: float) -> Dict[str, List[Path]]:
             Path(start=(w, 7*h/8), end=(w, 5*h/8)),
             Path(start=(w, 5*h/8), end=(w/2, h/2)),
             Path(start=(w/2, h/2), end=(w/2, 3*h/8)),
-            Path(end=(w/2, 0), start=(w/2, h/8)),
-           # Path(start=(0, h/8), end=(w/4, 0)),
-           # Path(start=(w/4, 0), end=(3*w/4, 0)),
-           # Path(start=(3*w/4, 0), end=(w, h/8)),
-           # Path(start=(w, h/8), end=(w, 3*h/8)),
-           # Path(start=(w, 3*h/8), end=(3*w/4, h/2)),
-           # Path(start=(3*w/4, h/2), end=(w/4, h/2)),
-           # Path(start=(w/4, h/2), end=(0, 5*h/8)),
-           # Path(start=(0, 5*h/8), end=(0, 7*h/8)),
+            Path(start=(w/2, h/8), end=(w/2, 0)),
 
         ],
         'DEBUG': [
