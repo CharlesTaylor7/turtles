@@ -102,18 +102,6 @@ def to_radians(degrees: float) -> float:
     return math.pi * degrees / 180
 
 
-def line_to(turtle: Turtle, end: Point) -> None:
-    (x, y) = turtle.char_position + end  # type: ignore
-    turtle.setheading(turtle.towards(x, y))
-    turtle.goto(x, y)
-
-
-def line(turtle: Turtle, distance: float, heading: Optional[float] = None) -> None:
-    if heading is not None:
-        turtle.setheading(heading)
-    turtle.forward(distance)
-
-
 def circle(turtle: Turtle, *, radius: float, extent: float, clockwise: bool) -> None:
     if clockwise:
         radius = -radius

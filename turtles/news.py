@@ -17,14 +17,13 @@ class MouseEvent:
 
 class TurtleNews:
     def __init__(self) -> None:
-        self.turtle = new_turtle(pen_size=3)
-        self.turtle_undos = self.turtle.undobufferentries()
+        self.turtle: Optional[Turtle] = None
         self.busy = False
         self.screen = Screen()
 
     def start(self) -> NoReturn:  # type: ignore[misc]
         title('Turtle News Network')
-        self.screen.bgcolor('black')
+        self.screen.bgcolor('Grey')
         self.screen.setup(width=1.0, height=1.0, startx=None, starty=None)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
@@ -46,8 +45,10 @@ class TurtleNews:
         self.busy = True
 
         # turtle undo
-        while self.turtle.undobufferentries() - self.turtle_undos:
-            self.turtle.undo()
+        if self.turtle:
+            self.turtle.reset()
+            self.turtle.hideturtle()
+        self.turtle = new_turtle(speed=1, pen_size=3)
 
         # write the phrase
         alphabet.write(self.turtle, article)
