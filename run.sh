@@ -1,1 +1,1 @@
-mypy . && python3 "$1.py" "$2"
+mypy . && python3 "apps/$1.py" "$2"
