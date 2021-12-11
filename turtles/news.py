@@ -2,7 +2,7 @@ from typing import Callable, Optional, Iterable, NoReturn
 from turtle import Turtle, Screen, mainloop, textinput, title
 from tkinter import Event, Canvas
 
-from turtles.utils import new_turtle
+from turtles.utils import new_turtle, new_screen
 from turtles import editor
 
 
@@ -15,12 +15,9 @@ class TurtleNewsNetwork:
     def __init__(self) -> None:
         self.turtle: Optional[Turtle] = None
         self.busy = False
-        self.screen = Screen()
+        self.screen = new_screen(title='Turtle News Network', bgcolor='#fafffa')
 
     def start(self) -> NoReturn:  # type: ignore[misc]
-        title('Turtle News Network')
-        self.screen.bgcolor('#fafffa')
-        self.screen.setup(width=1.0, height=1.0)
         self.screen.onclick(self.on_click, btn=2)
         # self.set_on_mouse_move_handler(self.on_mouse_move)
         mainloop()

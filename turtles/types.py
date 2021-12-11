@@ -1,8 +1,15 @@
 from typing import Literal, Tuple
 from dataclasses import dataclass
-from turtle import Vec2D, Turtle
+from turtle import Vec2D, Turtle, _Screen as Screen
 
 from turtles import utils
+
+
+__all__ = [
+    'Point', 'Path',
+    'Screen',
+    'TurtleSpeed',
+]
 
 
 Point = Tuple[float, float]
