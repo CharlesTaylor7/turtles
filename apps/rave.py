@@ -1,8 +1,7 @@
-from turtle import exitonclick, Screen
-from turtles.utils import new_turtle, DancingTurtle
+from turtle import exitonclick
+from turtles.utils import new_turtle, DancingTurtle, new_screen
 
-s = Screen()
-s.bgcolor('black')
+s = new_screen(title='rave', bgcolor='black')
 
 t = new_turtle(DancingTurtle, color='cyan', turtle_size=10, speed=9)
 t.dance()

@@ -2,10 +2,11 @@ from datetime import datetime
 from dataclasses import dataclass
 from turtle import Turtle, getscreen, ontimer, mainloop, title
 
+from turtles.utils import new_screen
+
 
 # init
-screen = getscreen()
-screen.bgcolor('black')
+screen = new_screen(title='Clock', bgcolor='black')
 
 radius = 200
 hour_hand_length = radius * 3 / 4

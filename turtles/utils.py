@@ -2,11 +2,11 @@ import math
 import random
 
 from typing import Optional, TypeVar, Type, Any
-from turtle import Turtle, RawTurtle, ontimer, Vec2D
+from turtle import Turtle, RawTurtle, ontimer, Vec2D, Screen as getscreen
 from typeguard import typechecked
 
 from turtles.config import settings
-from turtles.types import TurtleSpeed, Point
+from turtles.types import TurtleSpeed, Point, Screen
 
 
 T = TypeVar('T', bound=RawTurtle)
@@ -177,3 +177,12 @@ class DancingTurtle(Turtle):
             ontimer(left, interval)
 
         right()
+
+
+def new_screen(title: str, bgcolor: Optional[str] = None) -> Screen:
+    screen = getscreen()
+    screen.setup(width=1.0, height=1.0)
+    screen.title(title)
+    if bgcolor:
+        screen.bgcolor(bgcolor)
+    return screen

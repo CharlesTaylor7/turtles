@@ -2,9 +2,10 @@ import random
 
 from typing import Optional, Iterable, Any
 from turtles.editor import publish
-from turtles.utils import new_turtle, DancingTurtle
+from turtles.utils import new_turtle, DancingTurtle, new_screen
+from turtles.types import Screen
 
-from turtle import mainloop, Turtle, Screen, textinput
+from turtle import mainloop, Turtle, textinput
 
 
 answers = [
@@ -30,7 +31,7 @@ def reset(turtle: DancingTurtle) -> None:
     turtle.pensize(3)
 
 
-def on_click(screen: Any, turtle: DancingTurtle) -> None:
+def on_click(screen: Screen, turtle: DancingTurtle) -> None:
     def wrapped(_x: float, _y: float) -> None:
         # ask for input
         phrase: Optional[str] = textinput('What is your question?', '')
@@ -44,9 +45,7 @@ def on_click(screen: Any, turtle: DancingTurtle) -> None:
     screen.onclick(wrapped)
 
 
-screen = Screen()
-screen.setup(width=1.0, height=1.0)
-screen.title('Click to speak to the wise turtle')
+screen = new_screen(title='Click to speak to the wise turtle')
 wise_turtle = new_turtle(DancingTurtle)
 reset(wise_turtle)
 wise_turtle.dance()
