@@ -2,6 +2,14 @@
 
 ### Installation
 
+1. Install TK 
+
+Mac instructions:
+```
+brew install tcl-tk
+```
+
+2. Clone the repo & install python dependencies:
 ```sh
 git clone git@github.com:CharlesTaylor7/turtles.git
 cd turtles
